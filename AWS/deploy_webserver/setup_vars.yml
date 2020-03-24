@@ -39,7 +39,7 @@ ec2:
   vm:
     webVM: 
       count: 1
-      ami_id: "ami-0d5d9d301c853a04a" #ubuntu server  
+      ami_id: "ami-0d5d9d301c853a04a" #ubuntu server id 
       sg: [ vpc, public-ssh, public-http ]
 
 s3:
@@ -48,5 +48,3 @@ s3:
     policy: tasks/s3/webserver-policy.json
     files: "log/s3_folder/"
 
-apache:
-  index: "log/ws_index.html" 
