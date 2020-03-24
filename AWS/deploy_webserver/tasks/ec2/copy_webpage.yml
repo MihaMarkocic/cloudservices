@@ -4,4 +4,5 @@
     src: "tasks/ec2/index.html"
     dest: "/var/www/html/index.html"
   become: yes
+  notify: restart apache2
   tags: [ apache, webserver ]
