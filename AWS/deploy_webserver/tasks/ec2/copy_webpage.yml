@@ -1,0 +1,7 @@
+---
+- name: Copy index test page
+  copy:
+    src: "tasks/ec2/index.html"
+    dest: "/var/www/html/index.html"
+  become: yes
+  tags: [ apache, webserver ]

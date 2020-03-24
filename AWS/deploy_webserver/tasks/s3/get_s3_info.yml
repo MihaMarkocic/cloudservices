@@ -1,0 +1,14 @@
+---   
+- name: Launch s3 bucket(s)
+  aws_s3 :
+    bucket: "{{ s3.bucket.name }}"
+    mode: geturl
+    object: sample.jpg
+  register: s3_info
+  tags: [ s3 ]
+
+- name: save s3 info
+  copy:
+    content: "{{s3_info | to_nice_yaml }}"
+    dest: "log/s3_info.yml"        
+  tags: [s3]

@@ -1,0 +1,22 @@
+---    
+- name: provision ec2 instance(s)
+  ec2:
+    region: "{{general.region}}"
+    image: "{{latest_ami_id}}"
+    instance_type: t2.micro
+    group: "{{ item.value.sg}}"
+    key_name: "{{ ec2.key.name }}"
+    exact_count: "{{ item.value.count }}"
+    wait: yes
+    count_tag:
+      Name: "{{ item.key }}"
+    instance_tags:
+      Name: "{{ item.key }}"
+  loop: "{{ ec2.vm | dict2items }}"
+  register: ec2_info
+  tags: [ vm, webserver ] 
+    
+- copy:
+    content: "{{ec2_info | to_nice_yaml }}"
+    dest: "log/ec2_info.yml"
+  tags: [ vm, webserver ]

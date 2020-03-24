@@ -1,0 +1,11 @@
+---   
+- name: Launch s3 bucket(s)
+  s3_bucket:
+    region: "{{ general.region }}"
+    name: "{{ s3.bucket.name }}"
+    policy: "{{ lookup('file','{{s3.bucket.policy}}') }}"
+    state: "{{ general.state }}" 
+    versioning: no
+    tags:
+      name: "{{s3.bucket.name}}"
+  tags: [ s3 ]

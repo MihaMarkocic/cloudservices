@@ -1,0 +1,54 @@
+#main ansible playbook for deploying s3 bucket and apache webserver
+---
+
+- hosts: localhost
+  connection: local
+  gather_facts: False
+  vars_files:
+    - setup_vars.yml
+  tasks:
+    - include_tasks: tasks/s3/launch_s3.yml
+      tags: [ s3 ]
+    - include_tasks: tasks/s3/sync_s3.yml
+      tags: [ s3 ]
+    - include_tasks: tasks/s3/website_s3.yml
+      tags: [ s3 ]
+    - include_tasks: tasks/s3/get_s3_info.yml
+      tags: [ s3 ]
+
+
+- hosts: localhost
+  connection: local
+  gather_facts: False
+  vars_files:
+    - setup_vars.yml
+    
+  tasks:
+    - include_tasks: tasks/ec2/create_sg.yml
+      tags: [ sg, vm, webserver ]
+    - include_tasks: tasks/ec2/get_amis.yml
+      tags: [ amis, vm, webserver]
+    - include_tasks: tasks/ec2/launch_vm.yml
+      tags: [ vm, webserver]
+    - include_tasks: tasks/ec2/get_ec2_info.yml
+      tags: [ ec2_info, webserver, check_ssh, apache ]
+    - include_tasks: tasks/ec2/check_ssh.yml
+      tags: [ check_ssh, webserver, apache ]
+
+- hosts: ec2hosts
+  gather_facts: False
+  vars_files:
+    - setup_vars.yml
+  tasks:
+    - include_tasks: tasks/ec2/apache.yml
+      tags: [apache, webserver]
+    - include_tasks: tasks/ec2/copy_webpage.yml
+      tags: [ apache, webserver ]
+  
+  handlers:
+    - name: restart apache2
+      service:
+        name: apache2
+        enabled: yes
+        state: restarted
+      become: yes

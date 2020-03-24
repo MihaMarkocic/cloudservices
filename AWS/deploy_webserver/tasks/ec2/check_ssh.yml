@@ -1,0 +1,10 @@
+---
+- name: wait for SSH connection to come up
+  wait_for:
+    host: "{{ item.public_ip_address }}"
+    port: 22
+    state: started
+  when: item.state.name == "running"
+  loop: "{{instance_info.instances}}"
+  tags: [ check_ssh, webserver, apache ]
+  

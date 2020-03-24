@@ -1,0 +1,10 @@
+---
+- name: configure S3 bucket for web hosting
+  s3_website:
+    region: "{{ general.region }}"
+    name: "{{ s3.bucket.name }}"
+    state: "{{ general.state }}"
+  tags: [ s3 ]
+  register: s3web
+
+    

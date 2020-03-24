@@ -1,0 +1,52 @@
+#setup variables 
+---
+
+general:
+  region: "us-east-2"
+  state: "{{ state | default('present') }}"
+  
+ssh_key:
+  filename: "id_rsa_webserver"
+  filepath: "~/.ssh/"
+  
+security:
+  groups:
+    vpc:
+      description: "allowing internal trafic inside vpc"
+      rules: 
+        - proto: all
+          group_name: vpc
+    public-ssh:
+      description: "allow public ssh"
+      rules:
+        - proto: tcp
+          cidr_ip: 0.0.0.0/0
+          ports:
+            - 22 
+    public-http:
+      description: "allow public http"
+      rules: 
+        - proto: tcp
+          cidr_ip: 0.0.0.0/0
+          ports:
+            - 80
+            - 443 
+
+ec2:
+  key:
+    name: "id_rsa_webserver"
+    source: "~/.ssh/id_rsa_webserver"
+  vm:
+    webVM: 
+      count: 1
+      ami_id: "ami-0d5d9d301c853a04a" #ubuntu server  
+      sg: [ vpc, public-ssh, public-http ]
+
+s3:
+  bucket:
+    name: "my.staticweb.bucket"
+    policy: tasks/s3/webserver-policy.json
+    files: "log/s3_folder/"
+
+apache:
+  index: "log/ws_index.html" 

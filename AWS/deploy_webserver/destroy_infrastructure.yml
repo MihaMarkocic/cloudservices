@@ -1,0 +1,23 @@
+#main file for destroying infrastructure
+---
+
+- hosts: localhost
+  connection: local
+  gather_facts: False
+  
+  vars: 
+    state: absent
+  
+  vars_files:
+    - setup_vars.yml
+  
+  tasks:
+    - include_tasks: tasks/ec2/get_instance_ami.yml
+      tags: [ webserver ]
+    - include_tasks: tasks/ec2/destroy_vm.yml
+      tags: [ webserver ]
+    - include_tasks: tasks/ec2/create_sg.yml
+      tags: [ webserver ]
+    - include_tasks: tasks/s3/delete_s3.yml
+      tags: [ s3 ]
+    

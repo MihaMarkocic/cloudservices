@@ -1,0 +1,8 @@
+---
+- name: upload file(s) to s3
+  s3_sync:
+    bucket: "{{ s3.bucket.name }}"
+    region: "{{ general.region }}"
+    file_root: "{{ s3.bucket.files }}"
+    permission: public-read
+  tags: [ s3 ]

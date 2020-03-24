@@ -1,0 +1,10 @@
+---
+- name: Create Security Group
+  ec2_group:
+    region: "{{ general.region }}"
+    name: "{{ item.key }}"
+    description: "{{ item.value.description }}"
+    rules: "{{ item.value.rules }}"
+    state: "{{ general.state }}"
+  loop: "{{ security.groups | dict2items }}" 
+  tags: [ sg, vm, webserver ]  

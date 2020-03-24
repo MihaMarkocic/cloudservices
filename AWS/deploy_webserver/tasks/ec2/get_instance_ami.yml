@@ -1,0 +1,14 @@
+# get ami id of instances to terminate
+---
+- name: get instance(s) info
+  ec2_instance_info:
+    region: "{{general.region}}"
+  register: instance_info
+  tags: [ webserver ]
+  
+- name: print out AMI ids in use
+  set_fact:
+    used_ami_id: "{{ item.image_id }}"
+  when: item.state.name == "running"
+  loop: "{{instance_info.instances}}" 
+  tags: [ webserver ]

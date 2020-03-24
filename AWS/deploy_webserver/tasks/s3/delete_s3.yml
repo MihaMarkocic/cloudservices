@@ -1,0 +1,6 @@
+---
+- name: Delete s3 bucket(s)
+  aws_s3:
+    bucket: "{{ s3.bucket.name }}"
+    mode: delete
+  tags: [ s3 ]        

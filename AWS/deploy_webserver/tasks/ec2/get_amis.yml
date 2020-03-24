@@ -1,0 +1,23 @@
+---
+- name: gather info about Ubuntu 18.04 AMIs published by Canonical (099720109477)
+  ec2_ami_info:
+    owners: 099720109477
+    filters:
+      name: "ubuntu/images/hvm-ssd/ubuntu-bionic-18.04-amd64-server-2019*"
+  register: ami_info
+  tags: [ amis, vm, webserver]
+
+- name: save desired AMI id
+  vars:
+    webserver_ami: "{{ami_info.images | selectattr( 'name', 'defined' ) | sort(attribute='creation_date') | last }}"
+  set_fact:
+    latest_ami_id: "{{ webserver_ami.image_id }}"
+  tags: [ amis, vm, webserver]
+
+- copy:
+    content: "{{ami_info | to_nice_yaml }}"
+    dest: "log/ami_info.yml"        
+  tags: [always]
+  
+
+
