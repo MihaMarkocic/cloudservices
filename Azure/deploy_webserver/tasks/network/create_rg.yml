@@ -1,0 +1,6 @@
+---
+- name: Create resource group
+  azure_rm_resourcegroup:
+    name: "{{ global.resourcegroup }}"
+    location: "{{ global.location }}"
+  tags: [ always ] 

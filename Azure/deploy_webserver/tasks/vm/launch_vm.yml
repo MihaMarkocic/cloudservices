@@ -1,0 +1,22 @@
+---
+- name: Launch Virutal Machine
+  azure_rm_virtualmachine:
+    name: "{{ vm.web.name }}"
+    resource_group: "{{ global.resourcegroup }}"
+    virtual_network_name: "{{ vnet.name }}"
+    open_ports: "{{ vm.web.open_ports }}"
+    os_type: "{{vm.web.os}}"
+    admin_username: "{{ global.admin }}"
+    admin_password: "{{ vm.web.password | default ('') }}"
+    ssh_password_enabled: "{{ vm.web.password is defined }}"
+    ssh_public_keys:
+      - path: "/home/{{global.admin}}/.ssh/authorized_keys"
+        key_data: "{{ lookup('file','~/.ssh/az_key.pub') }}"
+    image:
+      publisher: "{{ images.ubuntu.publisher }}"
+      offer: "{{ images.ubuntu.offer }}"
+      sku: "{{ images.ubuntu.sku }}"
+      version: "{{ images.ubuntu.version }}"
+    vm_size: "{{ vm.web.size }}" 
+    state: "{{ global.state }}"
+  tags: [vm, webserver]

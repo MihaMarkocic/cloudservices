@@ -1,0 +1,43 @@
+#variables for cloudbased webserver deployment
+
+global:
+  resourcegroup: "webserver"
+  location: "westeurope"
+  admin: "azure"
+  state: "{{ state | default('present')}}"
+
+vnet:
+  name: VNET
+  cidr: 172.19.0.0/17
+  subnets:
+    public:
+      cidr: 172.19.1.0/24
+
+images:
+  ubuntu: 
+    publisher: "Canonical"
+    offer: "UbuntuServer"
+    sku: "18.04-LTS"
+    version: "latest"
+
+vm:
+  web:
+    name: "WebVM"
+    size: Standard_B1s
+    os: Linux
+    open_ports: #setting rules for vm security group
+      - 22
+      - 80
+      - 443
+
+storage:
+  account:
+    demostaticweb1:
+      acc_type: "Standard_RAGRS"
+      container_name: "public"
+      blob: "sample.png"
+      src: "./logs/sample.jpg"
+      public: "blob"
+      content: "image/jpg"
+        
+    

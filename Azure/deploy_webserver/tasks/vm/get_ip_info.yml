@@ -1,0 +1,22 @@
+# get information about VM, to add to host
+---
+- name: get info from azure VM 
+  azure_rm_publicipaddress_info :
+    resource_group: "{{ global.resourcegroup }}"
+  register: publicip_info
+  tags: [ pubip_info, webserver]
+
+- copy: 
+    content: "{{ publicip_info | to_nice_yaml }}"
+    dest: "logs/publicip.yml"
+  tags: [always]
+
+- name: Add all IPs to host group
+  add_host: 
+    hostname: "{{ item.ip_address }}" 
+    groups: webservers
+    ansible_ssh_private_key_file: "~/.ssh/az_key"
+    ansible_ssh_user: azure
+  loop: "{{ publicip_info.publicipaddresses }}"
+  tags: [ pubip_info, webserver ]
+  

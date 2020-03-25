@@ -1,0 +1,12 @@
+---
+- name: Create container and upload a file
+  azure_rm_storageblob:
+    resource_group: "{{ global.resourcegroup }}"
+    storage_account_name: "{{ item.key }}"
+    container: "{{ item.value.container_name }}"
+    blob: "{{ item.value.blob }}"
+    src: "{{ item.value.src }}"
+    public_access: "{{ item.value.public }}"
+    content_type: "{{ item.value.content }}"
+  loop: "{{ storage.account | dict2items }}"
+  tags: [ blob ]

@@ -1,0 +1,10 @@
+---
+
+- name: create storage account
+  azure_rm_storageaccount:
+    resource_group: "{{ global.resourcegroup }}"
+    name: "{{ item.key }}"
+    account_type: "{{ item.value.acc_type }}"
+  loop: "{{ storage.account | dict2items }}"
+  tags: [storage, blob]
+  

@@ -1,0 +1,49 @@
+#main playbook for deploying the webserver and cloudstorage
+---
+
+- hosts: localhost
+  connection: local
+  gather_facts: False
+  vars_files:
+  - setup_vars.yml
+
+  tasks: 
+    - include_tasks: tasks/network/create_rg.yml
+      tags: [ always ]
+    - include_tasks: tasks/storage/create_storage.yml
+      tags: [ storage, blob ]
+    - include_tasks: tasks/storage/storage_blob.yml
+      tags: [ blob ]
+
+- hosts: localhost
+  connection: local
+  gather_facts: False
+  vars_files:
+  - setup_vars.yml
+
+  tasks:
+    - include_tasks: tasks/network/create_vnet.yml
+      tags: [ vnet, vm, webserver ]
+    - include_tasks: tasks/network/create_subnets.yml
+      tags: [ subnets, vm, webserver ]
+    - include_tasks: tasks/vm/launch_vm.yml
+      tags: [ vm, webserver ]
+    - include_tasks: tasks/vm/get_ip_info.yml
+      tags: [ pubip_info, webserver ]
+    - include_tasks: tasks/vm/check_ssh.yml
+
+- hosts: webservers
+  gather_facts: False
+  tasks:
+    - include_tasks: tasks/vm/install_apache.yml
+      tags: [ apache, webserver ]
+    - include_tasks: tasks/vm/copy_indexpage.yml
+      tags: [ webserver ]
+  
+  handlers:
+    - name: restart apache2
+      service:
+        name: apache2
+        enabled: yes
+        state: restarted
+      become: yes

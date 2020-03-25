@@ -1,0 +1,15 @@
+---
+- name: Update and upgrade apt packages
+  become: yes
+  apt:
+    upgrade: yes
+    update_cache: yes
+  tags: [ apache, webserver ]
+
+- name: install apache on ubuntu
+  apt: 
+    name: apache2
+    update_cache: yes
+    state: latest 
+  become: yes
+  tags: [ apache, webserver ]

@@ -1,0 +1,15 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: False
+
+  vars_files:
+  - setup_vars.yml
+
+  tasks: 
+    - name: Delete resource group
+      azure_rm_resourcegroup:
+        name: "{{ global.resourcegroup }}"
+        location: "{{ global.location }}"
+        state: absent
+        force: yes

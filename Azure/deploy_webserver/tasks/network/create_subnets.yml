@@ -1,0 +1,10 @@
+---
+- name: create subnets
+  azure_rm_subnet:
+    resource_group: "{{ global.resourcegroup }}"
+    name: "{{ item.key }}"
+    address_prefix_cidr: "{{ item.value.cidr }}"
+    state: "{{ global.state }}"
+    virtual_network_name: "{{ vnet.name }}"
+  loop: "{{ vnet.subnets | dict2items }}"
+  tags: [ subnets, vm, webserver ]

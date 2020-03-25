@@ -1,0 +1,9 @@
+---
+- name: Copy index test page
+  copy:
+    src: "tasks/vm/index.html"
+    dest: "/var/www/html/index.html"
+  become: yes
+  notify:
+    - restart apache2
+  tags: [ webserver ]
