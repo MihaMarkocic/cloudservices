@@ -1,0 +1,6 @@
+# host inventory for WebServer
+
+[local]
+localhost
+
+
