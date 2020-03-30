@@ -1,8 +1,9 @@
 # AWS provisioning/automation examples
-This subdirectory contains an example of cloud-based web server and storage deployment. Running this example results in:
- - Creating and importing ssh key to AWS
- - Linux virtual machine with apache webserver
- - Cloud storage set up as a static website
- - Reference sample picture from cloud storage on apache webserver
+This subdirectory contains a few examples of AWS cloud deployments. Examples:
+ 
+ - **deploy_webserver**: Apache webserver and cloud storage deployment in a default network infrastructure. (*Ansible*)
+ - **vpc_infrastructure** : basic VPC infrastructure with private/public subnets, IG, route table and webservers. (*Terraform*)
 
-Automation tool: *Ansible* 
+In order to use and deploy these examples or similar infrastructure, an active *AWS* and/or *MS Azure* subscription is needed. Further, automation tool of choice should already be installed in your working environment.
+
+Automation tools: *Ansible*, *Terraform*
