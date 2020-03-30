@@ -39,3 +39,16 @@ tags = {
 	Name = "Private Subnet"
 }
 } 
+
+
+##################
+# internet gateway
+##################
+
+resource "aws_internet_gateway" "gw" {
+	vpc_id = aws_vpc.myVPC.id
+
+tags = {
+	Name = "myVPC IG"
+}
+}
