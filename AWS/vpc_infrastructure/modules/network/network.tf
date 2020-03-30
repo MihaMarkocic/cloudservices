@@ -29,7 +29,7 @@ tags = {
 }
 } 
 
-resource "aws_subnet" "private_subnet" {
+resource "aws_subnet" "privateSubnet" {
 	vpc_id = aws_vpc.myVPC.id
 	cidr_block = var.prSubnetCIDR
 	map_public_ip_on_launch = var.mapPrivateIP
@@ -51,4 +51,26 @@ resource "aws_internet_gateway" "gw" {
 tags = {
 	Name = "myVPC IG"
 }
+}
+
+#############
+# route table
+#############
+
+resource "aws_route_table" "publicRT" {
+	vpc_id = aws_vpc.myVPC.id
+tags = {
+	Name = "Public RT"
+}
+}
+
+resource "aws_route" "publicRoute" {
+	route_table_id = aws_route_table.publicRT.id 
+	destination_cidr_block = var.routeCIDR
+	gateway_id = aws_internet_gateway.gw.id
+}
+
+resource "aws_route_table_association" "publicSubnetRT" {
+	route_table_id = aws_route_table.publicRT.id
+	subnet_id = aws_subnet.publicSubnet.id
 }

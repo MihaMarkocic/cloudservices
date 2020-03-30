@@ -40,3 +40,7 @@ variable "mapPrivateIP" {
     default = false
 }
 
+variable "routeCIDR" {
+    type = string
+    default = "0.0.0.0/0"
+}
