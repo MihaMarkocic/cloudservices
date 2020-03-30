@@ -74,3 +74,32 @@ resource "aws_route_table_association" "publicSubnetRT" {
 	route_table_id = aws_route_table.publicRT.id
 	subnet_id = aws_subnet.publicSubnet.id
 }
+
+###############################
+# modify default security group
+###############################
+
+resource "aws_default_security_group" "default" {
+	vpc_id = aws_vpc.myVPC.id
+
+	ingress {
+		protocol = "tcp"
+		cidr_blocks = ["0.0.0.0/0"]  
+		from_port = 22
+		to_port = 22
+	}
+
+	ingress {
+		protocol = "tcp"
+		cidr_blocks = ["0.0.0.0/0"]
+		from_port = 80
+		to_port = 80
+	}
+
+	ingress {
+		protocol = "tcp"
+		cidr_blocks = ["0.0.0.0/0"]  
+		from_port = 443
+		to_port = 443
+	}
+}
