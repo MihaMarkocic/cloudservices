@@ -16,7 +16,7 @@ tags = {
 }
 
 # deploy webserver in private subnet
-resource "aws_instance" "Webserver-prvt" {
+resource "aws_instance" "PrivateVM" {
 	ami = var.InstanceAmi
 	instance_type = var.InstanceType
 	subnet_id = var.prvtSubnetID
@@ -26,6 +26,6 @@ resource "aws_instance" "Webserver-prvt" {
 	key_name = var.pubSshKey
 	
 tags = {
-	Name = "Private Webserver"
+	Name = "Private VM"
 }
 }
