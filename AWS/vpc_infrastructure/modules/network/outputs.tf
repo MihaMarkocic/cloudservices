@@ -14,3 +14,8 @@ output "securityGroupId" {
 	value = [ "${aws_default_security_group.default.id}" ]
 	description = "id of default security group for ec2 instance"
 }
+
+output "vpcId" {
+	value = aws_vpc.myVPC.id
+	description = "id of created VPC"
+}
