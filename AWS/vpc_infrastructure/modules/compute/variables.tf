@@ -37,3 +37,9 @@ variable "pubSshKey" {
     type = string
     default = "id_rsa_webserver"
 }
+
+variable "vpcID" {
+    description = "vpc ID from network.tf"
+    type = string
+    default = ""
+}

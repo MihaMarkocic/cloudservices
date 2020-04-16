@@ -30,6 +30,20 @@ tags = {
 }
 }
 
+#create jump box security group
+resource "aws_security_group" "jumpHostSg" {
+	name = "Jump Host SSH"
+	description = "Allow ssh from the jump host"
+	vpc_id = var.vpcID
+
+	ingress {
+		from_port = 22
+		to_port = 22
+		protocol = "tcp"
+		cidr_blocks = ["${aws_instance.jumpHost.private_ip}/32"]
+	}
+}
+
 
 # deploy webserver in private subnet
 resource "aws_instance" "PrivateVM" {
@@ -37,7 +51,7 @@ resource "aws_instance" "PrivateVM" {
 	instance_type = var.InstanceType
 	subnet_id = var.prvtSubnetID
 	availability_zone = var.ec2AvailabilityZone
-	vpc_security_group_ids = var.securityGroupID
+	vpc_security_group_ids = ["${aws_security_group.jumpHostSg.id}"]
 	associate_public_ip_address = false
 	key_name = var.pubSshKey
 	
