@@ -14,4 +14,5 @@ module "webservers" {
 	pubSubnetID = module.network.pubSubnetId
 	prvtSubnetID = module.network.prvtSubnetId
 	securityGroupID = module.network.securityGroupId
+	vpcID = module.network.vpcId
 }
