@@ -15,6 +15,22 @@ tags = {
 }
 }
 
+# deploy a jump host
+resource "aws_instance" "jumpHost" {
+	ami = var.InstanceAmi
+	instance_type = var.InstanceType
+	subnet_id = var.pubSubnetID
+	availability_zone = var.ec2AvailabilityZone
+	vpc_security_group_ids = var.securityGroupID
+	associate_public_ip_address = true
+	key_name = var.pubSshKey
+
+tags = {
+	Name = "Jump Box"
+}
+}
+
+
 # deploy webserver in private subnet
 resource "aws_instance" "PrivateVM" {
 	ami = var.InstanceAmi
