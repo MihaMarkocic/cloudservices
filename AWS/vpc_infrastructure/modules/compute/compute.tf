@@ -1,7 +1,7 @@
 # compute.tf deploying ec2 instances placed in already existing vpc (network.tf)
 
 # deploy webserver in public subnet
-resource "aws_instance" "Webserver-pub" {
+resource "aws_instance" "webserver" {
 	ami = var.InstanceAmi
 	instance_type = var.InstanceType
 	subnet_id = var.pubSubnetID
@@ -11,7 +11,7 @@ resource "aws_instance" "Webserver-pub" {
 	key_name = var.pubSshKey
 	
 tags = {
-	Name = "Public Webserver"
+	Name = "Webserver"
 }
 }
 
@@ -26,7 +26,7 @@ resource "aws_instance" "jumpHost" {
 	key_name = var.pubSshKey
 
 tags = {
-	Name = "Jump Box"
+	Name = "JumpHost"
 }
 }
 
@@ -46,7 +46,7 @@ resource "aws_security_group" "jumpHostSg" {
 
 
 # deploy webserver in private subnet
-resource "aws_instance" "PrivateVM" {
+resource "aws_instance" "privateVM" {
 	ami = var.InstanceAmi
 	instance_type = var.InstanceType
 	subnet_id = var.prvtSubnetID
@@ -56,6 +56,6 @@ resource "aws_instance" "PrivateVM" {
 	key_name = var.pubSshKey
 	
 tags = {
-	Name = "Private VM"
+	Name = "PrivateVM"
 }
 }
