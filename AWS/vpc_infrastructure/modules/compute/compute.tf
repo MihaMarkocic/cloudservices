@@ -2,8 +2,8 @@
 
 # deploy webserver in public subnet
 resource "aws_instance" "webserver" {
-	ami = var.InstanceAmi
-	instance_type = var.InstanceType
+	ami = var.instanceAmi
+	instance_type = var.instanceType
 	subnet_id = var.pubSubnetID
 	availability_zone = var.ec2AvailabilityZone
 	vpc_security_group_ids = var.securityGroupID
@@ -17,8 +17,8 @@ tags = {
 
 # deploy a jump host
 resource "aws_instance" "jumpHost" {
-	ami = var.InstanceAmi
-	instance_type = var.InstanceType
+	ami = var.instanceAmi
+	instance_type = var.instanceType
 	subnet_id = var.pubSubnetID
 	availability_zone = var.ec2AvailabilityZone
 	vpc_security_group_ids = var.securityGroupID
@@ -47,8 +47,8 @@ resource "aws_security_group" "jumpHostSg" {
 
 # deploy webserver in private subnet
 resource "aws_instance" "privateVM" {
-	ami = var.InstanceAmi
-	instance_type = var.InstanceType
+	ami = var.instanceAmi
+	instance_type = var.instanceType
 	subnet_id = var.prvtSubnetID
 	availability_zone = var.ec2AvailabilityZone
 	vpc_security_group_ids = ["${aws_security_group.jumpHostSg.id}"]

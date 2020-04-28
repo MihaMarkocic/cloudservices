@@ -1,11 +1,11 @@
 
 
-variable "InstanceAmi" {
+variable "instanceAmi" {
     description = "Ubuntu Server 18.04 LTS (64-bit)"
     default = "ami-0d5d9d301c853a04a" 
 }
 
-variable "InstanceType" {
+variable "instanceType" {
     type = string
     default = "t2.micro"
 }
