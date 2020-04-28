@@ -103,6 +103,13 @@ resource "aws_default_security_group" "default" {
 		to_port = 443
 	}
 
+    egress {
+	    protocol = "tcp"
+		cidr_blocks = [var.prSubnetCIDR]
+		from_port = 22
+		to_port = 22
+	}
+
 	egress {
 		protocol = "tcp"
 		cidr_blocks = ["0.0.0.0/0"]
