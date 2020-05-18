@@ -27,8 +27,20 @@ variable "ec2AvailabilityZone" {
     default = "us-east-2a"
 }
 
-variable "securityGroupID" {
-    description = "security group id form network.tf"
+variable "webserverSgId" {
+    description = "webserver security group id form network.tf"
+    type = list(string)
+    default = null
+}
+
+variable "jumpHostSgId" {
+    description = "jump host security group id form network.tf"
+    type = list(string)
+    default = null
+}
+
+variable "privateSgId" {
+    description = "private security group id form network.tf"
     type = list(string)
     default = null
 }
@@ -36,10 +48,4 @@ variable "securityGroupID" {
 variable "pubSshKey" {
     type = string
     default = "id_rsa_webserver"
-}
-
-variable "vpcID" {
-    description = "vpc ID from network.tf"
-    type = string
-    default = ""
 }

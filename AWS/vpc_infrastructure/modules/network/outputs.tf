@@ -10,12 +10,17 @@ output "prvtSubnetId" {
 	description = "id of private subnet"
 }
 
-output "securityGroupId" {
-	value = [ "${aws_default_security_group.default.id}" ]
-	description = "id of default security group for ec2 instance"
+output "webserverSGId" {
+	value = [ "${aws_security_group.webserverSG.id}" ]
+	description = "id of a webserver security group for ec2 instance"
 }
 
-output "vpcId" {
-	value = aws_vpc.myVPC.id
-	description = "id of created VPC"
+output "jumpHostSGId" {
+	value = [ "${aws_security_group.jumpHostSG.id}" ]
+	description = "id of a jump host security group for ec2 instance"
+}
+
+output "privateSGId" {
+	value = [ "${aws_security_group.privateSG.id}" ]
+	description = "id of a private security group for ec2 instance"
 }

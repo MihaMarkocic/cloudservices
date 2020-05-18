@@ -6,7 +6,7 @@ resource "aws_instance" "webserver" {
 	instance_type = var.instanceType
 	subnet_id = var.pubSubnetID
 	availability_zone = var.ec2AvailabilityZone
-	vpc_security_group_ids = var.securityGroupID
+	vpc_security_group_ids = var.webserverSgId
 	associate_public_ip_address = true
 	key_name = var.pubSshKey
 	
@@ -21,27 +21,13 @@ resource "aws_instance" "jumpHost" {
 	instance_type = var.instanceType
 	subnet_id = var.pubSubnetID
 	availability_zone = var.ec2AvailabilityZone
-	vpc_security_group_ids = var.securityGroupID
+	vpc_security_group_ids = var.jumpHostSgId
 	associate_public_ip_address = true
 	key_name = var.pubSshKey
 
 tags = {
 	Name = "JumpHost"
 }
-}
-
-#create jump box security group
-resource "aws_security_group" "jumpHostSg" {
-	name = "Jump Host SSH"
-	description = "Allow ssh from the jump host"
-	vpc_id = var.vpcID
-
-	ingress {
-		from_port = 22
-		to_port = 22
-		protocol = "tcp"
-		cidr_blocks = ["${aws_instance.jumpHost.private_ip}/32"]
-	}
 }
 
 
@@ -51,7 +37,7 @@ resource "aws_instance" "privateVM" {
 	instance_type = var.instanceType
 	subnet_id = var.prvtSubnetID
 	availability_zone = var.ec2AvailabilityZone
-	vpc_security_group_ids = ["${aws_security_group.jumpHostSg.id}"]
+	vpc_security_group_ids = var.privateSgId
 	associate_public_ip_address = false
 	key_name = var.pubSshKey
 	

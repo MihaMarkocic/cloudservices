@@ -49,7 +49,7 @@ resource "aws_internet_gateway" "gw" {
 	vpc_id = aws_vpc.myVPC.id
 
 tags = {
-	Name = "myVPC IG"
+	Name = "myVPC GW"
 }
 }
 
@@ -76,17 +76,25 @@ resource "aws_route_table_association" "publicSubnetRT" {
 }
 
 ###############################
-# modify default security group
+# create webserver security group
 ###############################
 
-resource "aws_default_security_group" "default" {
+resource "aws_security_group" "webserverSG" {
 	vpc_id = aws_vpc.myVPC.id
+	name = "Webserver/public SG"
 
 	ingress {
 		protocol = "tcp"
 		cidr_blocks = ["0.0.0.0/0"]  
 		from_port = 22
 		to_port = 22
+	}
+
+	ingress {
+		protocol = "tcp"
+		from_port = 22
+		to_port = 22
+		security_groups = [aws_security_group.jumpHostSG.id]
 	}
 
 	ingress {
@@ -103,13 +111,6 @@ resource "aws_default_security_group" "default" {
 		to_port = 443
 	}
 
-    egress {
-	    protocol = "tcp"
-		cidr_blocks = [var.prSubnetCIDR]
-		from_port = 22
-		to_port = 22
-	}
-
 	egress {
 		protocol = "tcp"
 		cidr_blocks = ["0.0.0.0/0"]
@@ -122,5 +123,75 @@ resource "aws_default_security_group" "default" {
 		cidr_blocks = ["0.0.0.0/0"]
 		from_port = 443
 		to_port = 443
+	}
+
+	tags = {
+		Name = "Webserver security group"
+	}
+}
+
+#################################
+# create jump host security group
+#################################
+resource "aws_security_group" "jumpHostSG" {
+	vpc_id = aws_vpc.myVPC.id
+	name = "Jump Host SG"
+
+	ingress {
+		protocol = "tcp"
+		cidr_blocks = ["0.0.0.0/0"] #ideally your public ip *.*.*./32
+		from_port = 22
+		to_port = 22
+	}
+
+	egress {
+		protocol = "tcp"
+		cidr_blocks = [var.vpcCIDR]
+		from_port = 22
+		to_port = 22
+	}
+	tags = {
+		Name = "Jump host security group"
+	}
+}
+
+########################################
+# create private instance security group
+########################################
+
+resource "aws_security_group" "privateSG" {
+	vpc_id = aws_vpc.myVPC.id
+	name = "Private SG"
+
+	ingress {
+		protocol = "tcp"
+		from_port = 80
+		to_port = 80
+		security_groups = [aws_security_group.webserverSG.id]
+	}
+
+	ingress {
+		protocol = "tcp"
+		from_port = 80
+		to_port = 80
+		self = true
+	}
+
+	ingress {
+		protocol = "tcp"
+		from_port = 22
+		to_port = 22
+		security_groups = [aws_security_group.jumpHostSG.id]
+	}
+
+	egress {
+		protocol = "tcp"
+		from_port = 80
+		to_port = 80
+		self = true
+
+	}
+	tags = {
+		Name = "Private security group"
 	}
 }
