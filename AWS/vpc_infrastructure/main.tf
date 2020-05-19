@@ -8,7 +8,7 @@ module "network" {
     source = "./modules/network"
 }
 
-module "webservers" {
+module "instances" {
 	source = "./modules/compute"
 	
 	pubSubnetID = module.network.pubSubnetId
@@ -16,4 +16,16 @@ module "webservers" {
 	webserverSgId = module.network.webserverSGId
 	jumpHostSgId = module.network.jumpHostSGId
 	privateSgId = module.network.privateSGId
+}
+
+output "webserver_public_ip" {
+	value = module.instances.webserverPubIP
+}
+
+output "jumpHost_public_ip" {
+	value = module.instances.jumpHostPubIP
+}
+
+output "private_vm_private_ip" {
+	value = module.instances.privateVMprvtIP
 }
