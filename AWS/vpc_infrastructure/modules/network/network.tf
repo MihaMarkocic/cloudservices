@@ -139,7 +139,7 @@ resource "aws_security_group" "jumpHostSG" {
 
 	ingress {
 		protocol = "tcp"
-		cidr_blocks = ["0.0.0.0/0"] #ideally your public ip *.*.*./32
+		cidr_blocks = ["0.0.0.0/0"] #ideally your public ip *.*.*.*/32
 		from_port = 22
 		to_port = 22
 	}
@@ -191,6 +191,7 @@ resource "aws_security_group" "privateSG" {
 		self = true
 
 	}
+
 	tags = {
 		Name = "Private security group"
 	}
