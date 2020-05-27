@@ -1,6 +1,6 @@
 # main ansible playbook to provision instances from dynamic inventory
 ---
-- hosts: all
+- hosts: webserver
   gather_facts: False
   
   tasks:

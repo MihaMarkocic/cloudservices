@@ -1,3 +1,12 @@
 ### ansible dynamic inventory to get all ec2 instances
----
 plugin: aws_ec2
+keyed_groups: 
+  #creating groups based on the tag of the instance
+  - key: tags.Name
+  - key: tags.type
+    separator: ""
+
+#
+#  filters:
+  #create inventory groups based on keys, values in tags
+#  tag:type: webserver 
