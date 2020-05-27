@@ -1,0 +1,28 @@
+# main ansible playbook to provision instances from dynamic inventory
+---
+- hosts: all
+  gather_facts: False
+  
+  tasks:
+    - name: Update and upgrade apt packages
+      become: yes
+      apt:
+        upgrade: yes
+        update_cache: yes
+
+    - name: install apache on ubuntu
+      apt: 
+        name: apache2
+        update_cache: yes
+        state: latest 
+      become: yes
+      notify: restart apache2
+
+  
+  handlers:
+    - name: restart apache2
+      service:
+        name: apache2
+        enabled: yes
+        state: restarted
+      become: yes
