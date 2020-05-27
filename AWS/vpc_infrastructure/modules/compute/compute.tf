@@ -12,6 +12,7 @@ resource "aws_instance" "jumpHost" {
 
 	tags = {
 		Name = "JumpHost"
+		type = "bastionhost"
 	}
 }
 
@@ -25,7 +26,7 @@ resource "aws_instance" "webserver" {
 	associate_public_ip_address = true
 	key_name = var.pubSshKey
 	
-	/*
+	/* this part is used for terraform provisioner
 	connection {
 		host = self.private_ip
 		user = "ubuntu"
@@ -46,6 +47,7 @@ resource "aws_instance" "webserver" {
 
 	tags = {
 		Name = "Webserver"
+		type = "webserver"
 	}
 }
 
@@ -62,5 +64,6 @@ resource "aws_instance" "privateVM" {
 	
 	tags = {
 		Name = "PrivateVM"
+		type = "private"
 	}
 }
