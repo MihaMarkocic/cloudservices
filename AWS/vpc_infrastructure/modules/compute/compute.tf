@@ -25,6 +25,7 @@ resource "aws_instance" "webserver" {
 	associate_public_ip_address = true
 	key_name = var.pubSshKey
 	
+	/*
 	connection {
 		host = self.private_ip
 		user = "ubuntu"
@@ -41,6 +42,7 @@ resource "aws_instance" "webserver" {
 			"sudo service apache2 start",
 		]
 	}
+	*/
 
 	tags = {
 		Name = "Webserver"
