@@ -49,3 +49,13 @@ variable "pubSshKey" {
     type = string
     default = "id_rsa_webserver"
 }
+
+variable "sshKeyLoc" {
+    type = string
+    default = "~/.ssh/id_rsa_webserver"
+}
+
+variable "instanceUser" {
+    type = string
+    default = "ubuntu"
+}

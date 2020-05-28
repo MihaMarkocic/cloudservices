@@ -29,11 +29,11 @@ resource "aws_instance" "webserver" {
 
 	connection {
 		host = self.private_ip
-		user = "ubuntu"
+		user = var.instanceUser
 		type = "ssh"
-		private_key = file("~/.ssh/id_rsa_webserver")
+		private_key = file(var.sshKeyLoc)
 		bastion_host = aws_instance.jumpHost.public_ip
-		bastion_private_key = file("~/.ssh/id_rsa_webserver") 
+		bastion_private_key = file(var.sshKeyLoc) 
 	}
 	
 	provisioner "remote-exec" {
@@ -43,7 +43,7 @@ resource "aws_instance" "webserver" {
 	}
 
 	provisioner "local-exec" {
-		command = "export ANSIBLE_HOST_KEY_CHECKING=False; ansible-playbook -u ubuntu --private-key ~/.ssh/id_rsa_webserver -i ./inventory/aws_ec2.yaml provision_instances.yaml"
+		command = "export ANSIBLE_HOST_KEY_CHECKING=False; ansible-playbook -u ${var.instanceUser} --private-key ${var.sshKeyLoc} -i ./inventory/aws_ec2.yaml provision_instances.yaml"
 	}
 
 
