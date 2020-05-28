@@ -26,7 +26,7 @@ resource "aws_instance" "webserver" {
 	associate_public_ip_address = true
 	key_name = var.pubSshKey
 	
-	/* this part is used for terraform provisioner
+
 	connection {
 		host = self.private_ip
 		user = "ubuntu"
@@ -35,15 +35,17 @@ resource "aws_instance" "webserver" {
 		bastion_host = aws_instance.jumpHost.public_ip
 		bastion_private_key = file("~/.ssh/id_rsa_webserver") 
 	}
-
+	
 	provisioner "remote-exec" {
 		inline = [
 			"sudo apt-get -y update",
-			"sudo apt-get -y install apache2",
-			"sudo service apache2 start",
 		]
 	}
-	*/
+
+	provisioner "local-exec" {
+		command = "export ANSIBLE_HOST_KEY_CHECKING=False; ansible-playbook -u ubuntu --private-key ~/.ssh/id_rsa_webserver -i ./inventory/aws_ec2.yaml provision_instances.yaml"
+	}
+
 
 	tags = {
 		Name = "Webserver"
