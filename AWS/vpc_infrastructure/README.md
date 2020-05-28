@@ -15,7 +15,8 @@ In this example, an AWS network infrastructure with webserver, bastion host and 
     1. Deploy jumpbox instance used for SSH connection to other instances created in the VPC
     2. Deploy webserver instance in public subnet
         - the SSH connection** to this instance is established using key and *bastion_host* option
-        - "*remote-exec*" Terraform provisioner is used to install and start apache2 service
+        - "*remote-exec*" Terraform provisioner is used to update apt-get, and wait for instance to actually launch***
+        - "*local-exec*" Terraform provisioner is used to run Ansible playbooks - installation of apache service. Ansible uses dynamic inventory plugin (*aws_ec2*) with appropriate filters to identify the target instance.
     3. Deploy private instance in private subnet
 
 
@@ -23,4 +24,4 @@ In this example, an AWS network infrastructure with webserver, bastion host and 
 
 \** *for an SSH connection to a remote server using a jump box with -J flag (ssh -J user@jumpbox user@destination), an SSH agent must be started and SSH key added*
 
-
+\*** *Terraform "remote-exec" provisioner waits until the instance is launched, while "local-exec" provisioner starts regardless of the instance status!*
