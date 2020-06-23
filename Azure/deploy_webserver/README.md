@@ -5,7 +5,8 @@ This subdirectory/example contains Ansible playbooks/tasks and other configurati
 ### Content:
 - *ansible.cfg* and *hosts* are configuration and inventory files (respectively).
 - *setup_vars* is the main file containing all the variables used in this example.
-- [*deploy_infrastructure*](https://github.com/MihaMarkocic/cloudservices/blob/master/Azure/deploy_webserver/deploy_infrastructure.yml) is the main playbook, containing multiple tasks to launch and configure Azure VM as a webserver and a Storage as a static website. [Tasks](https://github.com/MihaMarkocic/cloudservices/tree/master/Azure/deploy_webserver/tasks) are divided into:
+- [*deploy_infrastructure*](https://github.com/MihaMarkocic/cloudservices/blob/master/Azure/deploy_webserver/deploy_infrastructure.yml) is the main playbook, containing multiple tasks to launch and configure Azure VM as a webserver and a Storage as a static website.  
+[Tasks](https://github.com/MihaMarkocic/cloudservices/tree/master/Azure/deploy_webserver/tasks) are divided into:
     - [Network](https://github.com/MihaMarkocic/cloudservices/tree/master/Azure/deploy_webserver/tasks/network) tasks - creating a resource group, a simple Vnet and a public subnet. 
     - [VM](https://github.com/MihaMarkocic/cloudservices/tree/master/Azure/deploy_webserver/tasks/vm) tasks - launching instance, setting security rules for VM security group, installing Apache service and uploading new *index.html* file.
     - [Storage](https://github.com/MihaMarkocic/cloudservices/tree/master/Azure/deploy_webserver/tasks/storage) tasks - creating blob storage and uploading files.
