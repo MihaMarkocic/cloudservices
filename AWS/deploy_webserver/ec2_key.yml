@@ -1,0 +1,14 @@
+---
+- hosts: localhost
+  gather_facts: False
+
+  vars_files:
+    - setup_vars.yml
+
+  tasks: 
+    - name: upload public key
+      ec2_key:
+        region: "{{ general.region }}"
+        name: "{{ ssh_key.filename }}"
+        key_material: "{{ lookup('file', '{{ssh_key.filepath}}{{ ssh_key.filename }}.pub') }}"
+        state: "{{ general.state }}"

@@ -6,7 +6,7 @@ general:
   state: "{{ state | default('present') }}"
   
 ssh_key:
-  filename: "id_rsa_webserver"
+  filename: "id_rsa_PC"
   filepath: "~/.ssh/"
   
 security:
@@ -34,8 +34,8 @@ security:
 
 ec2:
   key:
-    name: "id_rsa_webserver"
-    source: "~/.ssh/id_rsa_webserver"
+    name: "id_rsa_PC"
+    source: "~/.ssh/id_rsa_PC"
   vm:
     webVM: 
       count: 1

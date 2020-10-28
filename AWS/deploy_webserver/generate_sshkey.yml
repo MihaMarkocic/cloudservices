@@ -1,0 +1,17 @@
+#ansible playbook generating ssh keypair
+---
+- name:  generate SSH keypair
+  connection: local
+  hosts: localhost
+  
+  vars_files:
+    - setup_vars.yml
+    
+  tasks:
+    - name: generate SSH key "{{ ssh_key.filename }}"
+      openssh_keypair:
+        path: "{{ssh_key.filepath}}{{ssh_key.filename}}"
+        type: rsa
+        size: 4096 
+        state: present 
+        force: no   
