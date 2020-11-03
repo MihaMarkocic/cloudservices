@@ -1,5 +1,15 @@
 # main terraform module to deploy AWS network infrastructure
 
+# this is required for the terraform 0.13+ version!
+#terraform {
+#  required_providers {
+#    aws = {
+#      source  = "hashicorp/aws"
+#    }
+#  }
+#}
+
+
 provider "aws" {
     region = var.region
 }

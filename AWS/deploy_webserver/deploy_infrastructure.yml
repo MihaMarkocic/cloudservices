@@ -4,6 +4,17 @@
 - hosts: localhost
   connection: local
   gather_facts: False
+  tasks:
+    - name: create "log" directory if it does not exist yet
+      become: yes
+      file:
+        path: log
+        state: directory
+
+
+- hosts: localhost
+  connection: local
+  gather_facts: False
   vars_files:
     - setup_vars.yml
   tasks:

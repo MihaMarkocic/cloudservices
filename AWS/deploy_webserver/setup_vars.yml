@@ -46,5 +46,5 @@ s3:
   bucket:
     name: "my.staticweb.bucket"
     policy: tasks/s3/webserver-policy.json
-    files: "log/s3_folder/"
+    files: "s3_folder/"
 
