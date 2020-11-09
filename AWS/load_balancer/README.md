@@ -13,7 +13,7 @@ In this example, an AWS network infrastructure (VPC and public subnet) with 3 we
     2. Deploy 3 webserver instances in a created public subnet
 
 - Load Balancer:
-    1. Deploy network load balancer in a public subnet with 3 webserver instances
+    1. Deploy network load balancer with an elastic IP in a public subnet with 3 webserver instances
     2. Create 2 load balancer listeners listening to the incoming traffic:
         - Forwarding the incoming *HTTP* requests on port 80
         - Forwarding the incoming *HTTPS* requests on port 443

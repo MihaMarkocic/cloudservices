@@ -1,10 +1,21 @@
 
 #deploy a load balancer
 
+resource "aws_eip" "eip_nlb" {
+    tags = {
+        Name = "elastic-ip-for-nlb"
+    }
+}
+
+
 resource "aws_lb" "load_balancer" {
     name = var.lbName
     load_balancer_type = var.lbType  
-    subnets =  var.subnetIDlist
+    
+    subnet_mapping {
+        subnet_id = var.subnetID
+        allocation_id = aws_eip.eip_nlb.id
+    } 
 }
 
 resource "aws_lb_listener" "lb_listener_http" {
