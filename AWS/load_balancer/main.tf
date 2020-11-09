@@ -19,7 +19,7 @@ module "loadbalancing" {
     source = "./modules/lb"
 
     vpcID = module.infrastructure.vpcID
-    subnetIDlist = module.infrastructure.subnetIDlist
+    subnetID = module.infrastructure.subnetID
     web1ID = module.compute.web1ID
     web2ID = module.compute.web2ID
     web3ID = module.compute.web3ID
