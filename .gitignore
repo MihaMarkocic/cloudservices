@@ -3,5 +3,6 @@ AWS/vpc_infrastructure/.terraform
 AWS/vpc_infrastructure/terraform.tfstate
 AWS/vpc_infrastructure/terraform.tfstate.backup
 Azure/deploy_webserver/logs
+AWS/load_balancer/.terraform
 AWS/load_balancer/terraform.tfstate
 AWS/load_balancer/terraform.tfstate.backup
