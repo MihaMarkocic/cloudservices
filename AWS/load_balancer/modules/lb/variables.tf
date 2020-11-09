@@ -16,10 +16,10 @@ variable "vpcID" {
     default = ""
 }
 
-variable "subnetIDlist" {
-    description = "subnet IDs to be added to load balancer"
-    type = list(string)
-    default = null
+variable "subnetID" {
+    description = "subnet ID to be added to load balancer"
+    type = string
+    default = ""
 }
 
 variable "tgNameHttp" {
