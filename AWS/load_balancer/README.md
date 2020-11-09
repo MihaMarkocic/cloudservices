@@ -1,4 +1,4 @@
-# Virtual network infrastructure deployment Example
+# Network Load Balancer deployment Example
 In this example, an AWS network infrastructure (VPC and public subnet) with 3 webservers and a network load balancer is deployed:
 
 - Network infrastructure:
