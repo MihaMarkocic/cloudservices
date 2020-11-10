@@ -6,11 +6,13 @@ In this example, an AWS network infrastructure (VPC and public subnet) with 3 we
     2. Create one public *(10.0.1.0/24)* subnet
     3. Create internet gateway and associate it with VPC
     4. Create a new route table and add a route towards internet gateway for public subnet traffic
-    5. Create webserver SG *(HTTP, HTTPS from anywhere; HTTP, HTTPS to anywhere)*
+    5. Create webserver SG *(HTTP, HTTPS and SSH from anywhere; HTTP, HTTPS to anywhere)*
 
 - EC2 instance deployment:
     1. Obtain AWS AMI ID for the desired os *(Ubuntu Server 18.04 LTS from Canonical)*
     2. Deploy 3 webserver instances in a created public subnet
+    3. Update apt-get on each instance using *"remote-exec"* Terraform provisioner
+    4. Run Ansible playbook to install Apache service using *"local-exec"* Terraform provisioner 
 
 - Load Balancer:
     1. Deploy network load balancer with an elastic IP in a public subnet with 3 webserver instances
