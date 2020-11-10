@@ -15,7 +15,6 @@ data "aws_ami" "ubuntu" {
     }
 }
 
-
 resource "aws_instance" "webserver1" {
     ami = data.aws_ami.ubuntu.id
     instance_type = var.instanceType
@@ -28,6 +27,21 @@ resource "aws_instance" "webserver1" {
     tags = {
         Name = "Webserver1"
         type = "webserver"
+    }
+
+    connection {
+        host = self.public_ip
+        user = var.instanceUser
+        type = "ssh"
+        private_key = file(var.sshKeyLoc)
+    }
+
+    provisioner "remote-exec" {
+        inline = ["sudo apt-get -y update"]
+    }
+
+    provisioner "local-exec" {
+        command = "export ANSIBLE_HOST_KEY_CHECKING=False; ansible-playbook -u ${var.instanceUser} --private-key ${var.sshKeyLoc} -i ./inventory/aws_ec2.yaml provision_instances.yaml"
     }
 }
 
@@ -44,6 +58,21 @@ resource "aws_instance" "webserver2" {
         Name = "Webserver2"
         type = "webserver"
     }
+
+    connection {
+        host = self.public_ip
+        user = var.instanceUser
+        type = "ssh"
+        private_key = file(var.sshKeyLoc)
+    }
+
+    provisioner "remote-exec" {
+        inline = ["sudo apt-get -y update"]
+    }
+
+    provisioner "local-exec" {
+        command = "export ANSIBLE_HOST_KEY_CHECKING=False; ansible-playbook -u ${var.instanceUser} --private-key ${var.sshKeyLoc} -i ./inventory/aws_ec2.yaml provision_instances.yaml"
+    }
 }
 
 resource "aws_instance" "webserver3" {
@@ -59,4 +88,20 @@ resource "aws_instance" "webserver3" {
         Name = "Webserver3"
         type = "webserver"
     }
+
+    connection {
+        host = self.public_ip
+        user = var.instanceUser
+        type = "ssh"
+        private_key = file(var.sshKeyLoc)
+    }
+
+    provisioner "remote-exec" {
+        inline = ["sudo apt-get -y update"]
+    }
+
+    provisioner "local-exec" {
+        command = "export ANSIBLE_HOST_KEY_CHECKING=False; ansible-playbook -u ${var.instanceUser} --private-key ${var.sshKeyLoc} -i ./inventory/aws_ec2.yaml provision_instances.yaml"
+    }
 }
+
