@@ -27,6 +27,7 @@ resource "aws_instance" "webserver1" {
 
     tags = {
         Name = "Webserver1"
+        type = "webserver"
     }
 }
 
@@ -41,6 +42,7 @@ resource "aws_instance" "webserver2" {
 
     tags = {
         Name = "Webserver2"
+        type = "webserver"
     }
 }
 
@@ -55,5 +57,6 @@ resource "aws_instance" "webserver3" {
 
     tags = {
         Name = "Webserver3"
+        type = "webserver"
     }
 }
