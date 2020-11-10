@@ -77,6 +77,13 @@ resource "aws_security_group" "webserverSG" {
         to_port = 443
     }
 
+    ingress {
+        protocol = "tcp"
+        cidr_blocks = ["0.0.0.0/0"]
+        from_port = 22
+        to_port = 22
+    }
+
     egress {
         protocol = "tcp"
         cidr_blocks = ["0.0.0.0/0"]
