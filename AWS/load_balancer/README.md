@@ -12,7 +12,15 @@ In this example, an AWS network infrastructure (VPC and public subnet) with 3 we
     1. Obtain AWS AMI ID for the desired os *(Ubuntu Server 18.04 LTS from Canonical)*
     2. Deploy 3 webserver instances in a created public subnet
     3. Update apt-get on each instance using *"remote-exec"* Terraform provisioner
-    4. Run Ansible playbook to install Apache service using *"local-exec"* Terraform provisioner 
+    4. Run Ansible playbook* using *"local-exec"* Terraform provisioner to:
+        - Install Apache service on all 3 Ubuntu servers
+        - Enable *Includes* and *cgi* Apache2 modules
+        - Copy [*.htaccess*](https://github.com/MihaMarkocic/cloudservices/blob/master/AWS/load_balancer/webserver/.htaccess) file with to *var/www/html/*
+        - Enable *XBitHack* in *apache2.conf* configuration file
+        - Add *Includes* to the *var/www/* directory in *apache2.conf*
+        - Replace [*index.html*](https://github.com/MihaMarkocic/cloudservices/blob/master/AWS/load_balancer/webserver/index.html) file. Replaced html homepage is set to show webserver's *ifconfig*.
+        - Restart Apache service
+        
 
 - Load Balancer:
     1. Deploy network load balancer with an elastic IP in a public subnet with 3 webserver instances
@@ -20,9 +28,9 @@ In this example, an AWS network infrastructure (VPC and public subnet) with 3 we
         - Forwarding the incoming *HTTP* requests on port 80
         - Forwarding the incoming *HTTPS* requests on port 443
     3. Create 2 target groups *(HTTP and HTTPS)* to distribute the load between the targets
-    4. Create target group attachments to attach individual instance/node to the desired target group*. In this example the instances are associated as follows:
-        - *webserver1* and *webserver2* are associated with *http target group*
-        - all 3 instances *(webserver1, webserver2, webserver3)* are associated with *https target group* 
+    4. Create target group attachments to attach individual instance/node to the desired target group**. In this example the instances are associated as follows:
+        - all 3 instances *(webserver1, webserver2, webserver3)* are associated with *http* and *https* target group  
 
-\* *The targets belonging to the same target group, to which requests are forwarded, have to run the same service*
+\*  *Ansible Playbook is run only once with the remote provisioner as there are all 3 webservers in the Inventory. This is done with the help of **aws_ec2** plugin*
+\** *The targets belonging to the same target group, to which requests are forwarded, have to run the same service*
 
