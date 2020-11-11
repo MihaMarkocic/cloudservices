@@ -77,6 +77,12 @@ resource "aws_lb_target_group_attachment" "web2_http" {
     target_id = var.web2ID
 }
 
+resource "aws_lb_target_group_attachment" "web3_http" {
+    target_group_arn = aws_lb_target_group.lb_target_group_http.arn
+    port = 80
+    target_id = var.web3ID
+}
+
 resource "aws_lb_target_group_attachment" "web1_https" {
     target_group_arn = aws_lb_target_group.lb_target_group_https.arn
     port = 443
