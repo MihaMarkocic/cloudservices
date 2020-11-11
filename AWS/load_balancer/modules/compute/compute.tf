@@ -58,6 +58,17 @@ resource "aws_instance" "webserver2" {
         Name = "Webserver2"
         type = "webserver"
     }
+
+    connection {
+        host = self.public_ip
+        user = var.instanceUser
+        type = "ssh"
+        private_key = file(var.sshKeyLoc)
+    }
+
+    provisioner "remote-exec" {
+        inline = ["sudo apt-get -y update"]
+    }
 }
 
 resource "aws_instance" "webserver3" {
@@ -72,6 +83,17 @@ resource "aws_instance" "webserver3" {
     tags = {
         Name = "Webserver3"
         type = "webserver"
+    }
+
+    connection {
+        host = self.public_ip
+        user = var.instanceUser
+        type = "ssh"
+        private_key = file(var.sshKeyLoc)
+    }
+
+    provisioner "remote-exec" {
+        inline = ["sudo apt-get -y update"]
     }
 }
 
