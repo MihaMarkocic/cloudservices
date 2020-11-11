@@ -19,28 +19,43 @@
         name: apache2
         state: latest 
       become: yes
-      notify: restart apache2
+    
+    - name: Enable includes and cgi
+      become: yes  
+      command:
+        cmd: a2enmod include cgi
+      
 
     - name: Copy .htaccess
       copy:
-        src: ".htaccess"
+        src: "/webserver/.htaccess"
         dest: "/var/www/html/.htaccess"
       become: yes
       
-    # - name: Print new line in the file
-    #   lineinfile:
-    #     path: "/etc/apache2/apache2.conf"
-    #     insertafter: EOF
-    #     line: "XBitHack on"
-    #     state: present
-    #   become: yes
+    - name: Enable xbithack in apache2.conf
+      become: yes
+      lineinfile:
+        path: "/etc/apache2/apache2.conf"
+        insertafter: EOF
+        line: "XBitHack on"
+        state: present
+      
+    
+    - name: Modify directory in apache2.conf
+      become: yes
+      lineinfile:
+        path: "/etc/apache2/apache2.conf"
+        regexp: 'Options Indexes FollowSymLinks'
+        firstmatch: yes
+        line: "\tOptions Indexes FollowSymLinks Includes"
     
     - name: copy index.html and modify permission
       copy:
-        src: "index.html"
+        src: "/webserver/index.html"
         dest: "/var/www/html/index.html"
         mode: a+x
       become: yes
+      notify: restart apache2
     
   handlers:
     - name: restart apache2
