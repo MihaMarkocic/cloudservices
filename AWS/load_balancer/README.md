@@ -32,5 +32,6 @@ In this example, an AWS network infrastructure (VPC and public subnet) with 3 we
         - all 3 instances *(webserver1, webserver2, webserver3)* are associated with *http* and *https* target group  
 
 \*  *Ansible Playbook is run only once with the remote provisioner as there are all 3 webservers in the Inventory. This is done with the help of **aws_ec2** plugin*
+
 \** *The targets belonging to the same target group, to which requests are forwarded, have to run the same service*
 
