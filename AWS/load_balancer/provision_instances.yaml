@@ -28,7 +28,7 @@
 
     - name: Copy .htaccess
       copy:
-        src: "/webserver/.htaccess"
+        src: "webserver/.htaccess"
         dest: "/var/www/html/.htaccess"
       become: yes
       
@@ -51,7 +51,7 @@
     
     - name: copy index.html and modify permission
       copy:
-        src: "/webserver/index.html"
+        src: "webserver/index.html"
         dest: "/var/www/html/index.html"
         mode: a+x
       become: yes
