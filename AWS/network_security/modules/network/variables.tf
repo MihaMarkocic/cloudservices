@@ -30,6 +30,11 @@ variable "prvtSubCIDR" {
     default = "172.19.2.0/24"
 }
 
+variable "destinationCIDR" {
+    type = string
+    default = "0.0.0.0/0"
+}
+
 variable "s3arn" {
     type = string
     default = ""
