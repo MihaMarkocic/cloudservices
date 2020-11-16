@@ -9,16 +9,18 @@ In this demo, two (private & public) subnets are created in a custom VPC. An ins
 
 - [Storage](https://github.com/MihaMarkocic/cloudservices/tree/master/AWS/network_security/modules/storage):
     1. Create an S3 bucket for the storage of the Flow Logs
+    2. Attach a bucket policy allowing the Flow Logs to publish the logs to it.
 
 - [Network infrastructure & security](https://github.com/MihaMarkocic/cloudservices/tree/master/AWS/network_security/modules/network):
     1. Create a new VPC *(172.19.0.0/17)*
     2. Create one public *(172.19.1.0/24)* and one private *(172.19.2.0/24)* subnet
-    3. Create public SG *(HTTP, HTTPS and SSH\* from anywhere; HTTP, HTTPS to anywhere and MySQL to private subnet)*
-    4. Create private SG *(SSH and MySQL from public subnet; HTTP, HTTPS to anywhere)*
-    5. Create custom Network Access Control List (NACL) allowing:
+    3. Create an internet gateway and a route table enabling public subnet to access internet through the internet gateway
+    4. Create public SG *(HTTP, HTTPS and SSH\* from anywhere; HTTP, HTTPS to anywhere and MySQL to private subnet)*
+    5. Create private SG *(SSH and MySQL from public subnet)*
+    6. Create custom Network Access Control List (NACL) allowing:
         - inbound traffic from *HTTP, HTTPS, SSH and ephemeral ports\*\**
         - outbound traffic on *HTTP, HTTPS, MySQL and ephemeral ports\*\** 
-    6. Create Flow Logs and store them into the S3 bucket:
+    7. Create Flow Logs and store them into the S3 bucket:
         - Monitoring ALL traffic for the public subnet
         - Monitoring ACCEPTED traffic for the private subnet
 
