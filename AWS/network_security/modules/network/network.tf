@@ -176,6 +176,17 @@ resource "aws_network_acl" "myNACL" {
         to_port = 65535
     } 
 
+    ingress {
+        protocol = -1
+        action = "deny"
+        rule_no = 1000
+        cidr_block = "0.0.0.0/0" 
+        from_port = 0
+        to_port = 0
+    }
+
+    ## Egress rules
+    
     egress {
         protocol = "tcp"
         action = "allow"
@@ -198,6 +209,15 @@ resource "aws_network_acl" "myNACL" {
         protocol = "tcp"
         action = "allow"
         rule_no = 300
+        cidr_block = "0.0.0.0/0" 
+        from_port = 22
+        to_port = 22
+    }
+
+    egress {
+        protocol = "tcp"
+        action = "allow"
+        rule_no = 400
         cidr_block = aws_subnet.prvtSubnet.cidr_block 
         from_port = 1443
         to_port = 1443
@@ -207,10 +227,19 @@ resource "aws_network_acl" "myNACL" {
     egress {
         protocol = "tcp"
         action = "allow"
-        rule_no = 400
+        rule_no = 500
         cidr_block = "0.0.0.0/0" 
         from_port = 1024
         to_port = 65535
+    }
+
+    egress {
+        protocol = -1
+        action = "deny"
+        rule_no = 1000
+        cidr_block = "0.0.0.0/0" 
+        from_port = 0
+        to_port = 0
     }
 
     tags = {
