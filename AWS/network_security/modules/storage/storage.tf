@@ -2,6 +2,8 @@
 
 resource "aws_s3_bucket" "flow_logs_bucket" {
     bucket = "flow.log.bucket"
+    policy = file("./modules/storage/flowlogs-policy.json")
+    force_destroy = true
 
     tags = {
         Name = "FlowLogs Storage"
