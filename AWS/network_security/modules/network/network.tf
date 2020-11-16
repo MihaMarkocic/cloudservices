@@ -40,6 +40,38 @@ resource "aws_subnet" "prvtSubnet" {
     }
 }
 
+### Create internet gateway
+
+resource "aws_internet_gateway" "myGW" {
+    vpc_id = aws_vpc.myVPC.id
+
+    tags = {
+        Name = "myVPC IGW" 
+    }
+}
+
+### Create route table, route and association
+
+resource "aws_route_table" "myRT" {
+    vpc_id = aws_vpc.myVPC.id
+
+    tags = {
+        Name = "myVPC RT"
+    }
+}
+
+resource "aws_route" "publicRoute" {
+    route_table_id = aws_route_table.myRT.id
+    destination_cidr_block = var.destinationCIDR
+    gateway_id = aws_internet_gateway.myGW.id
+}
+
+
+resource "aws_route_table_association" "pubSubRT" {
+    subnet_id = aws_subnet.pubSubnet.id
+    route_table_id = aws_route_table.myRT.id
+}
+
 ### Create security group
 
 resource "aws_security_group" "pubSG" {
@@ -114,22 +146,6 @@ resource "aws_security_group" "prvtSG" {
         from_port = 1443
         to_port = 1443
     }
-
-    egress {
-        description = "allow outbound TLS" 
-        protocol = "tcp"
-        cidr_blocks = ["0.0.0.0/0"]
-        from_port = 443
-        to_port = 443
-    }
-
-    egress {
-        description = "allow outbound HTTP" 
-        protocol = "tcp"
-        cidr_blocks = ["0.0.0.0/0"]
-        from_port = 80
-        to_port = 80
-    }
 }
 
 
@@ -186,7 +202,7 @@ resource "aws_network_acl" "myNACL" {
     }
 
     ## Egress rules
-    
+
     egress {
         protocol = "tcp"
         action = "allow"
