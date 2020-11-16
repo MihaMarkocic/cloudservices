@@ -16,8 +16,8 @@ In this demo, two (private & public) subnets are created in a custom VPC. An ins
     3. Create public SG *(HTTP, HTTPS and SSH\* from anywhere; HTTP, HTTPS to anywhere and MySQL to private subnet)*
     4. Create private SG *(SSH and MySQL from public subnet; HTTP, HTTPS to anywhere)*
     5. Create custom Network Access Control List (NACL) allowing:
-        - inbound traffic from *HTTP, HTTPS, SSH and ephemeral ports\** *
-        - outbound traffic on *HTTP, HTTPS, MySQL and ephemeral ports\** * 
+        - inbound traffic from *HTTP, HTTPS, SSH and ephemeral ports\*\**
+        - outbound traffic on *HTTP, HTTPS, MySQL and ephemeral ports\*\** 
     6. Create Flow Logs and store them into the S3 bucket:
         - Monitoring ALL traffic for the public subnet
         - Monitoring ACCEPTED traffic for the private subnet
