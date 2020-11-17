@@ -102,6 +102,16 @@ resource "aws_security_group" "pubSG" {
         to_port = 80
     }
 
+    ingress {
+        description = "allow ping" 
+        protocol = "icmp"
+        cidr_blocks = ["0.0.0.0/0"]
+        from_port = 8
+        to_port = 0
+    }
+
+    ### egress rules
+
     egress {
         description = "allow HTTP"
         protocol = "tcp"
@@ -122,8 +132,8 @@ resource "aws_security_group" "pubSG" {
         description = "allow MySQL"
         protocol = "tcp"
         cidr_blocks = [aws_subnet.prvtSubnet.cidr_block]
-        from_port = 1443
-        to_port = 1443
+        from_port = 3306
+        to_port = 3306
     }
 }
 
@@ -143,9 +153,18 @@ resource "aws_security_group" "prvtSG" {
         description = "allow MySQL from public subnet" 
         protocol = "tcp"
         cidr_blocks = [aws_subnet.pubSubnet.cidr_block]
-        from_port = 1443
-        to_port = 1443
+        from_port = 3306
+        to_port = 3306
     }
+
+    ingress {
+        description = "allow ping" 
+        protocol = "icmp"
+        cidr_blocks = [aws_subnet.pubSubnet.cidr_block]
+        from_port = 8
+        to_port = 0
+    }
+
 }
 
 
@@ -192,6 +211,17 @@ resource "aws_network_acl" "myNACL" {
         to_port = 65535
     } 
 
+     ingress {
+        protocol = "icmp"
+        action = "allow"
+        rule_no = 500
+        cidr_block = "0.0.0.0/0"
+        icmp_type = 8
+        icmp_code = 0
+        from_port = 0
+        to_port = 0
+    }
+
     ingress {
         protocol = -1
         action = "deny"
@@ -235,8 +265,8 @@ resource "aws_network_acl" "myNACL" {
         action = "allow"
         rule_no = 400
         cidr_block = aws_subnet.prvtSubnet.cidr_block 
-        from_port = 1443
-        to_port = 1443
+        from_port = 3306
+        to_port = 3306
     }
 
     #allow ephemeral ports!
@@ -247,6 +277,17 @@ resource "aws_network_acl" "myNACL" {
         cidr_block = "0.0.0.0/0" 
         from_port = 1024
         to_port = 65535
+    }
+
+     egress {
+        protocol = "icmp"
+        action = "allow"
+        rule_no = 600
+        cidr_block = aws_subnet.prvtSubnet.cidr_block
+        icmp_type = 8
+        icmp_code = 0
+        from_port = 0
+        to_port = 0
     }
 
     egress {
