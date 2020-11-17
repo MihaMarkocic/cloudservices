@@ -84,6 +84,13 @@ resource "aws_security_group" "webserverSG" {
         to_port = 22
     }
 
+    ingress {
+        protocol = "icmp"
+        cidr_blocks = ["0.0.0.0/0"]
+        from_port = 8
+        to_port = 0
+    }
+
     egress {
         protocol = "tcp"
         cidr_blocks = ["0.0.0.0/0"]
