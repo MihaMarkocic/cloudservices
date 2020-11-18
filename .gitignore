@@ -9,3 +9,7 @@ AWS/load_balancer/terraform.tfstate.backup
 AWS/network_security/.terraform
 AWS/network_security/terraform.tfstate
 AWS/network_security/terraform.tfstate.backup
+AWS/vpc_peering/.terraform
+AWS/vpc_peering/terraform.tfstate
+AWS/vpc_peering/terraform.tfstate.backup
+AWS/vpc_peering/ec2_key.yml
