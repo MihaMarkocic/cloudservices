@@ -23,7 +23,7 @@ module "network-london" {
     subnetA_name = "Subnet A"
     subnetB_cidr = "172.19.2.0/24"
     subnetB_name = "Subnet B"
-    otherVPC_cidr = module.network-paris.thisVPC_cidr
+    otherVPC_cidr = module.network-paris.vpc_cidr
 
 }
 
@@ -37,7 +37,23 @@ module "network-paris" {
     subnetA_name = "Subnet A"
     subnetB_cidr = "172.20.2.0/24"
     subnetB_name = "Subnet B"
-    otherVPC_cidr = module.network-london.thisVPC_cidr
+    otherVPC_cidr = module.network-london.vpc_cidr
+}
+
+module "peering" {
+    source = "./modules/peering"
+
+    requester_region = "eu-west-2"
+    accepter_region = "eu-west-3"
+    
+    requesterVPC_id = module.network-london.vpc_id 
+    accepterVPC_id = module.network-paris.vpc_id
+    
+    requesterVPC_cidr = module.network-london.vpc_cidr 
+    accepterVPC_cidr = module.network-paris.vpc_cidr
+    
+    requester_RT = module.network-london.route_table_id
+    accepter_RT = module.network-paris.route_table_id
 }
 
 module "compute-london" {
