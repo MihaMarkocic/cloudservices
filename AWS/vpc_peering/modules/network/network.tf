@@ -98,14 +98,6 @@ resource "aws_security_group" "instanceSG" {
         to_port = 80
     }
 
-    ingress {
-        description = "allow HTTP"
-        protocol = "tcp"
-        cidr_blocks = ["0.0.0.0/0"]
-        from_port = 80
-        to_port = 80
-    }
-
     egress {
         description = "allow all outbound traffic"
         protocol = "-1"
