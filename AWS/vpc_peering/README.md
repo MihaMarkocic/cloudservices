@@ -13,7 +13,7 @@ Modules subdirectory consist of:
     2. Create a VPC 
     3. Create two public subnets
     4. Create an internet gateway and a route table. associate both subnets with the route table to enabling access to the internet
-    5. Create custom Security group *(SSH\* from anywhere, HTTP form both VPCs; all outbound traffic allowed)* 
+    5. Create custom Security group *(SSH\* from anywhere, HTTP from both VPCs; all outbound traffic allowed)* 
 
 - [Peering](https://github.com/MihaMarkocic/cloudservices/tree/master/AWS/vpc_peering/modules/peering):
     1. Define both AWS regions used as they are needed to create a connection on both "sides"
