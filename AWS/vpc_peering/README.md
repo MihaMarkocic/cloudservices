@@ -31,7 +31,6 @@ Modules subdirectory consist of:
         - associate it with the custom security group
         - through "remote-exec" provisioner install apache2 service    
 
-By connecting over SSH to the instance of choice you can test the VPC peering connection by trying to reach other instances (in the other VPC) by using their private IP addresses. For the purpose of testing, security group was customized to allow the HTTP traffic only from created VPCs. SSH is the only traffic an instance can accept from the "outside" network.
 
 ## Testing the connection
 Apart from Terraform files and modules to build the VPC peering infrastructure, this repository includes also a short *Ansible Playbook* [*connection_test*](https://github.com/MihaMarkocic/cloudservices/blob/master/AWS/vpc_peering/connection_test.yml) to test the VPC peering connections between instances. In order to gather the hosts (webservers) deployed with Terraform, an [*aws_ec2*](https://github.com/MihaMarkocic/cloudservices/blob/master/AWS/vpc_peering/aws_ec2.yml) plugin is used to create dynamic inventory. Once the infrastructure is deployed, you can inspect what is the output of *aws_ec2* plugin by executing the following command in the terminal:
@@ -56,6 +55,7 @@ Ansible playbook is executed on all 4 hosts (webservers) simultaneously, testing
     ansible-playbook -u *username* --private-key *path/to/your/sshkey* -i aws_ec2.yml connection_test.yml
     ```
 
+As mentioned the Ansible playbook connects over SSH to each instance deployed and tries to reach other instances over privte IPs on port 80. For that purpose, the security group of webservers allows only SSH inbound traffic from "outside", while HTTP traffic is allowed from within both VPCs. If there are no errors during the deployment, the playbook should succesfully finish with all connections tested.
 
 
 \*  *SSH traffic to your subnet should be allowed only from your IP address or IP address range*
