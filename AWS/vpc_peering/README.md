@@ -34,14 +34,14 @@ Modules subdirectory consist of:
 By connecting over SSH to the instance of choice you can test the VPC peering connection by trying to reach other instances (in the other VPC) by using their private IP addresses. For the purpose of testing, security group was customized to allow the HTTP traffic only from created VPCs. SSH is the only traffic an instance can accept from the "outside" network.
 
 ## Testing the connection
-Apart from Terraform files and modules to build the VPC peering infrastructure, this repository includes also a short *Ansible Playbook* [*connection_test*]() to test the VPC peering connections. In order to gather the hosts (webservers) deployed with the terraform, an [*aws_ec2*]() plugin is used to create dynamic inventory. Once the infrastructure is deployed, you can inspect what is the output of *aws_ec2* plugin by executing the following command in the terminal:
+Apart from Terraform files and modules to build the VPC peering infrastructure, this repository includes also a short *Ansible Playbook* [*connection_test*](https://github.com/MihaMarkocic/cloudservices/blob/master/AWS/vpc_peering/connection_test.yml) to test the VPC peering connections between instances. In order to gather the hosts (webservers) deployed with Terraform, an [*aws_ec2*](https://github.com/MihaMarkocic/cloudservices/blob/master/AWS/vpc_peering/aws_ec2.yml) plugin is used to create dynamic inventory. Once the infrastructure is deployed, you can inspect what is the output of *aws_ec2* plugin by executing the following command in the terminal:
 ```
 ansible-inventory -i aws_ec2.yml --list --yaml
 ```
 
 Ansible playbook is executed on all 4 hosts (webservers) simultaneously, testing the connection to other instances over the private IPs on port 80. To run *connection_test* the following commands should be executed from the terminal:
 
-- Ansible enables host key checking by default, which guards against spoofing and man-in-the-middle attacks! If a new host is not in *'known_hosts'* your control may prompt for confirmation. If you do not want this and understand the implications you can *disable host key checking* by setting environment variable:
+- Ansible enables host key checking by default, which guards against spoofing and man-in-the-middle attacks! If a new host is not in *'known_hosts'* your control may prompt for confirmation. If you do not want this and understand the implications you can *disable host key checking* by setting an environment variable:
     ```
     export ANSIBLE_HOST_KEY_CHECKING=False
     ```
@@ -51,7 +51,7 @@ Ansible playbook is executed on all 4 hosts (webservers) simultaneously, testing
     [defaults]
     host_key_checking = False
     ```
-- the command to run the ansible playbook should include the *username* to login to each instance, *Key location* for the SSH connection and *inventory file* which is in our case aws_ec2 plugin and the playbook to run:
+- the command to run the ansible playbook should include the *username* to log in to each instance, *Key location* for the SSH connection and *inventory file* which is in our case *aws_ec2* plugin and the playbook file:
     ```
     ansible-playbook -u *username* --private-key *path/to/your/sshkey* -i aws_ec2.yml connection_test.yml
     ```
