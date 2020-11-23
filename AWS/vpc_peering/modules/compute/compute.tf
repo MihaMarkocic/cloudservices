@@ -49,7 +49,7 @@ resource "aws_instance" "instanceA" {
 
     tags = {
         Name = "InstanceA(${var.region}a)"
-        Type = "server"
+        Type = "webserver"
     }
 }
 
@@ -72,6 +72,7 @@ resource "aws_instance" "instanceB" {
     provisioner "remote-exec" {
         inline = [
             "sudo apt-get -y update",
+            "sudo apt-get -y upgrade",
             "sudo apt-get install -y apache2"
         ]
 
@@ -79,6 +80,6 @@ resource "aws_instance" "instanceB" {
 
     tags = {
         Name = "InstanceB(${var.region}b)"
-        Type = "server"
+        Type = "webserver"
     }
 }
