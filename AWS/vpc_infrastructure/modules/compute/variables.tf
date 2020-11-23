@@ -47,12 +47,12 @@ variable "privateSgId" {
 
 variable "pubSshKey" {
     type = string
-    default = "id_rsa_PC"
+    default = "id_rsa_webserver"
 }
 
 variable "sshKeyLoc" {
     type = string
-    default = "~/.ssh/id_rsa_PC"
+    default = "~/.ssh/id_rsa_webserver"
 }
 
 variable "instanceUser" {
