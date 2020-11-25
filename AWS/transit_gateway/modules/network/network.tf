@@ -115,7 +115,7 @@ resource "aws_security_group" "customSGvpcA" {
 
 resource "aws_security_group" "customSGvpcB" {
     description = "custom security group to test transit gateway connection"
-    vpc_id = aws_vpc.vpcA.id
+    vpc_id = aws_vpc.vpcB.id
 
     ingress {
         description = "allow SSH"
@@ -128,7 +128,7 @@ resource "aws_security_group" "customSGvpcB" {
     ingress {
         description = "allow HTTP from other VPCs"
         protocol = "tcp"
-        cidr_blocks = [aws_vpc.vpcB.cidr_block]
+        cidr_blocks = [aws_vpc.vpcA.cidr_block]
         from_port = 80
         to_port = 80
     }
@@ -136,7 +136,7 @@ resource "aws_security_group" "customSGvpcB" {
     ingress {
         description = "allow ping test from other VPCs"
         protocol = "icmp"
-        cidr_blocks = [aws_vpc.vpcB.cidr_block]
+        cidr_blocks = [aws_vpc.vpcA.cidr_block]
         from_port = 8  # icmp type number
         to_port = 0 # icmp code
         
@@ -223,13 +223,13 @@ resource "aws_route" "publicRouteVPCB" {
 
 resource "aws_route" "AtoTGW" {
     route_table_id = aws_route_table.rtA.id
-    destination_cidr_block = var.destination_cidr
+    destination_cidr_block = aws_vpc.vpcB.cidr_block
     transit_gateway_id = aws_ec2_transit_gateway.tgw.id
 }
 
 resource "aws_route" "BtoTGW" {
     route_table_id = aws_route_table.rtB.id
-    destination_cidr_block = var.destination_cidr
+    destination_cidr_block = aws_vpc.vpcA.cidr_block
     transit_gateway_id = aws_ec2_transit_gateway.tgw.id
 }
 
