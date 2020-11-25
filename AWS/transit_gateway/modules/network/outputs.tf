@@ -19,3 +19,14 @@ output "vpcB_subnet2_id" {
     description = "vpc B subnet 2 id output"
     value = aws_subnet.vpcBsubnet2.id
 }
+
+output "vpcA_sg_id" {
+    description = "vpc A custom securtiy group ID"
+    value = ["${aws_security_group.customSGvpcA.id}"]
+}
+
+
+output "vpcB_sg_id" {
+    description = "vpc B custom securtiy group ID"
+    value = ["${aws_security_group.customSGvpcB.id}"]
+}

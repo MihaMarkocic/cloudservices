@@ -73,6 +73,84 @@ resource "aws_subnet" "vpcBsubnet2" {
     } 
 }
 
+# Create security groups
+
+resource "aws_security_group" "customSGvpcA" {
+    description = "custom security group to test transit gateway connection"
+    vpc_id = aws_vpc.vpcA.id
+
+    ingress {
+        description = "allow SSH"
+        protocol = "tcp"
+        cidr_blocks = ["0.0.0.0/0"] # ideally your public IP range!!
+        from_port = 22
+        to_port = 22
+    }
+
+    ingress {
+        description = "allow HTTP from other VPCs"
+        protocol = "tcp"
+        cidr_blocks = [aws_vpc.vpcB.cidr_block]
+        from_port = 80
+        to_port = 80
+    }
+
+    ingress {
+        description = "allow ping test from other VPCs"
+        protocol = "icmp"
+        cidr_blocks = [aws_vpc.vpcB.cidr_block]
+        from_port = 8  # icmp type number
+        to_port = 0 # icmp code
+        
+    }
+
+    egress {
+        description = "allow all outbound traffic"
+        protocol = "-1"
+        cidr_blocks = ["0.0.0.0/0"]
+        from_port = 0
+        to_port = 0
+    }
+}
+
+resource "aws_security_group" "customSGvpcB" {
+    description = "custom security group to test transit gateway connection"
+    vpc_id = aws_vpc.vpcA.id
+
+    ingress {
+        description = "allow SSH"
+        protocol = "tcp"
+        cidr_blocks = ["0.0.0.0/0"] # ideally your public IP range!!
+        from_port = 22
+        to_port = 22
+    }
+
+    ingress {
+        description = "allow HTTP from other VPCs"
+        protocol = "tcp"
+        cidr_blocks = [aws_vpc.vpcB.cidr_block]
+        from_port = 80
+        to_port = 80
+    }
+
+    ingress {
+        description = "allow ping test from other VPCs"
+        protocol = "icmp"
+        cidr_blocks = [aws_vpc.vpcB.cidr_block]
+        from_port = 8  # icmp type number
+        to_port = 0 # icmp code
+        
+    }
+
+    egress {
+        description = "allow all outbound traffic"
+        protocol = "-1"
+        cidr_blocks = ["0.0.0.0/0"]
+        from_port = 0
+        to_port = 0
+    }
+}
+
 # Create route table for vpcA and vpcB
 
 resource "aws_route_table" "rtA" {
