@@ -224,96 +224,11 @@ resource "aws_route" "publicRouteVPCB" {
 resource "aws_route" "AtoTGW" {
     route_table_id = aws_route_table.rtA.id
     destination_cidr_block = aws_vpc.vpcB.cidr_block
-    transit_gateway_id = aws_ec2_transit_gateway.tgw.id
+    transit_gateway_id = var.transit_gateway_id
 }
 
 resource "aws_route" "BtoTGW" {
     route_table_id = aws_route_table.rtB.id
     destination_cidr_block = aws_vpc.vpcA.cidr_block
-    transit_gateway_id = aws_ec2_transit_gateway.tgw.id
-}
-
-
-
-
-# create transit gateway
-
-resource "aws_ec2_transit_gateway" "tgw" {
-    auto_accept_shared_attachments = "enable"
-    default_route_table_association = "disable"
-    default_route_table_propagation = "disable"
-    dns_support = "enable"
-
-    tags = {
-        Name = "test transit-gw"
-    }
-}
-
-# create transit gateway route table
-
-resource "aws_ec2_transit_gateway_route_table" "tgwRT" {
-  transit_gateway_id = aws_ec2_transit_gateway.tgw.id
-}
-
-#create vpc attachments to tgw
-
-resource "aws_ec2_transit_gateway_vpc_attachment" "vpcAtgw" {
-  subnet_ids = [aws_subnet.vpcAsubnet1.id,
-                aws_subnet.vpcAsubnet2.id]
-  transit_gateway_id = aws_ec2_transit_gateway.tgw.id
-  vpc_id = aws_vpc.vpcA.id
-  transit_gateway_default_route_table_association = false
-  transit_gateway_default_route_table_propagation = false
-}
-
-
-resource "aws_ec2_transit_gateway_vpc_attachment" "vpcBtgw" {
-  subnet_ids = [aws_subnet.vpcBsubnet1.id, 
-                aws_subnet.vpcBsubnet2.id]
-  transit_gateway_id = aws_ec2_transit_gateway.tgw.id
-  vpc_id = aws_vpc.vpcB.id
-  transit_gateway_default_route_table_association = false
-  transit_gateway_default_route_table_propagation = false
-}
-
-#create transit gateway routes
-
-resource "aws_ec2_transit_gateway_route" "transitAtoB" {
-  destination_cidr_block = var.vpcB_cidr
-  transit_gateway_attachment_id = aws_ec2_transit_gateway_vpc_attachment.vpcAtgw.id
-  transit_gateway_route_table_id = aws_ec2_transit_gateway_route_table.tgwRT.id
-}
-
-resource "aws_ec2_transit_gateway_route" "transitBtoA" {
-  destination_cidr_block = var.vpcA_cidr
-  transit_gateway_attachment_id = aws_ec2_transit_gateway_vpc_attachment.vpcBtgw.id
-  transit_gateway_route_table_id = aws_ec2_transit_gateway_route_table.tgwRT.id
-}
-
-# create associations - attachment of VPC A to transit gateway and transit gateway route table
-
-resource "aws_ec2_transit_gateway_route_table_association" "associateA" {
-  transit_gateway_attachment_id  = aws_ec2_transit_gateway_vpc_attachment.vpcAtgw.id
-  transit_gateway_route_table_id = aws_ec2_transit_gateway_route_table.tgwRT.id
-}
-
-# create associations - attachment of VPC B to transit gateway and transit gateway route table
-
-resource "aws_ec2_transit_gateway_route_table_association" "associateB" {
-  transit_gateway_attachment_id  = aws_ec2_transit_gateway_vpc_attachment.vpcBtgw.id
-  transit_gateway_route_table_id = aws_ec2_transit_gateway_route_table.tgwRT.id
-}
-
-# create propagation - attachment of VPC A to transit gateway and transit gateway route table
-
-resource "aws_ec2_transit_gateway_route_table_propagation" "propagateA" {
-  transit_gateway_attachment_id  = aws_ec2_transit_gateway_vpc_attachment.vpcAtgw.id
-  transit_gateway_route_table_id = aws_ec2_transit_gateway_route_table.tgwRT.id
-}
-
-# create propagation - attachment of VPC B to transit gateway and transit gateway route table
-
-resource "aws_ec2_transit_gateway_route_table_propagation" "propagateB" {
-  transit_gateway_attachment_id  = aws_ec2_transit_gateway_vpc_attachment.vpcBtgw.id
-  transit_gateway_route_table_id = aws_ec2_transit_gateway_route_table.tgwRT.id
+    transit_gateway_id = var.transit_gateway_id
 }
