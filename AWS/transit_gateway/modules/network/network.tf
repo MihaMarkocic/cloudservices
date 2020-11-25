@@ -151,6 +151,24 @@ resource "aws_security_group" "customSGvpcB" {
     }
 }
 
+# Create internet gateway
+
+resource "aws_internet_gateway" "vpcAgw" {
+    vpc_id = aws_vpc.vpcA.id
+
+    tags = {
+        Name = "vpcA IGW" 
+    }
+}
+
+resource "aws_internet_gateway" "vpcBgw" {
+    vpc_id = aws_vpc.vpcB.id
+
+    tags = {
+        Name = "vpcB IGW" 
+    }
+}
+
 # Create route table for vpcA and vpcB
 
 resource "aws_route_table" "rtA" {
@@ -189,6 +207,17 @@ resource "aws_route_table_association" "Bsub2Route" {
     route_table_id = aws_route_table.rtB.id
 }
 
+resource "aws_route" "publicRouteVPCA" {
+    route_table_id = aws_route_table.rtA.id
+    destination_cidr_block = var.destination_cidr
+    gateway_id = aws_internet_gateway.vpcAgw.id
+}
+
+resource "aws_route" "publicRouteVPCB" {
+    route_table_id = aws_route_table.rtB.id
+    destination_cidr_block = var.destination_cidr
+    gateway_id = aws_internet_gateway.vpcBgw.id
+}
 
 # routes to transit gateway
 
@@ -203,6 +232,9 @@ resource "aws_route" "BtoTGW" {
     destination_cidr_block = var.destination_cidr
     transit_gateway_id = aws_ec2_transit_gateway.tgw.id
 }
+
+
+
 
 # create transit gateway
 
