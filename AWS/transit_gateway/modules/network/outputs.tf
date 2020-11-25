@@ -1,5 +1,21 @@
 # outputs of network.tf
 
+output "vpcA_id" {
+    value = aws_vpc.vpcA.id
+}
+
+output "vpcB_id" {
+    value = aws_vpc.vpcB.id
+}
+
+output "vpcA_cidr" {
+    value = aws_vpc.vpcA.cidr_block
+}
+
+output "vpcB_cidr" {
+    value = aws_vpc.vpcB.cidr_block
+}
+
 output "vpcA_subnet1_id" {
     description = "vpc a subnet 1 id output"
     value = aws_subnet.vpcAsubnet1.id

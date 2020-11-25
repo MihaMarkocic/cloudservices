@@ -82,3 +82,9 @@ variable "destination_cidr" {
     type = string
     default = "0.0.0.0/0"
 }
+
+variable "transit_gateway_id" {
+    description = "ID of created transit gateway"
+    type = string
+    default = ""
+}
