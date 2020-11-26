@@ -88,20 +88,19 @@ resource "aws_security_group" "customSGvpcA" {
     }
 
     ingress {
-        description = "allow HTTP from other VPCs"
+        description = "allow HTTP from owned VPCs"
         protocol = "tcp"
-        cidr_blocks = [aws_vpc.vpcB.cidr_block]
+        cidr_blocks = [aws_vpc.vpcB.cidr_block, aws_vpc.vpcA.cidr_block]
         from_port = 80
         to_port = 80
     }
 
     ingress {
-        description = "allow ping test from other VPCs"
+        description = "allow ping test from owned VPCs"
         protocol = "icmp"
-        cidr_blocks = [aws_vpc.vpcB.cidr_block]
+        cidr_blocks = [aws_vpc.vpcB.cidr_block, aws_vpc.vpcA.cidr_block]
         from_port = 8  # icmp type number
-        to_port = 0 # icmp code
-        
+        to_port = 0 # icmp code 
     }
 
     egress {
@@ -126,17 +125,17 @@ resource "aws_security_group" "customSGvpcB" {
     }
 
     ingress {
-        description = "allow HTTP from other VPCs"
+        description = "allow HTTP from owned VPCs"
         protocol = "tcp"
-        cidr_blocks = [aws_vpc.vpcA.cidr_block]
+        cidr_blocks = [aws_vpc.vpcA.cidr_block, aws_vpc.vpcB.cidr_block]
         from_port = 80
         to_port = 80
     }
 
     ingress {
-        description = "allow ping test from other VPCs"
+        description = "allow ping test from owned VPCs"
         protocol = "icmp"
-        cidr_blocks = [aws_vpc.vpcA.cidr_block]
+        cidr_blocks = [aws_vpc.vpcA.cidr_block, aws_vpc.vpcB.cidr_block]
         from_port = 8  # icmp type number
         to_port = 0 # icmp code
         
