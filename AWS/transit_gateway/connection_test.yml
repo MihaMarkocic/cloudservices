@@ -5,7 +5,9 @@
 
   tasks:
     - name: test the connection over private IP
-      ansible.netcommon.net_ping:
-        dest: "{{ hostvars[item].private_ip_address }}"
-        count: 5
+      wait_for:
+        host: "{{ hostvars[item].private_ip_address }}"
+        port: 80
+        delay: 5
+        state: started
       with_items: "{{ groups['webserver'] }}"
