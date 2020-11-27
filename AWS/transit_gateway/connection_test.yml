@@ -1,0 +1,11 @@
+---
+
+- hosts: webserver
+  gather_facts: false
+
+  tasks:
+    - name: test the connection over private IP
+      ansible.netcommon.net_ping:
+        dest: "{{ hostvars[item].private_ip_address }}"
+        count: 5
+      with_items: "{{ groups['webserver'] }}"
