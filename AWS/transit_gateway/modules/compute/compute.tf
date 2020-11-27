@@ -34,9 +34,16 @@ resource "aws_instance" "instanceA" {
         type = "ssh"
         private_key = file(var.key_loc)
     }
+    
+    provisioner "remote-exec" {
+        inline = [
+            "sudo apt-get -y update"
+        ]
+    }
 
     provisioner "remote-exec" {
         inline = [
+            "sudo apt-get -f autoremove",
             "sudo apt-get -y update",
             "sudo apt-get -y upgrade",
             "sudo apt-get -y dist-upgrade",
@@ -67,6 +74,13 @@ resource "aws_instance" "instanceB" {
 
     provisioner "remote-exec" {
         inline = [
+            "sudo apt-get -y update"
+        ]
+    }
+
+    provisioner "remote-exec" {
+        inline = [
+            "sudo apt-get -f autoremove",
             "sudo apt-get -y update",
             "sudo apt-get -y upgrade",
             "sudo apt-get -y dist-upgrade",
