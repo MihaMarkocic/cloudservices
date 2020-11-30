@@ -1,10 +1,10 @@
 # AWS Transit Gateway Example
-In this example a transit gateway is used to interconnect Virtual Private CLouds (VPCs) in the same region. Such configuration is also known as *a centralized router*. A transit gateway acts as a  regional virtual router for traffic between your VPCs and VPN connections. Such routing operates at layer 3, where packets are sent to the next-hop attachment based on their destination.
+In this example, a transit gateway is used to interconnect Virtual Private Clouds (VPCs) in the same region. Such configuration is also known as *a centralized router*. A transit gateway acts as a  regional virtual router for traffic between your VPCs and VPN connections. Such routing operates at layer 3, where packets are sent to the next-hop attachment based on their destination.
 
 ## Details
-This demo consists of two VPCs, both deployed in the same region (*eu-west-2*). Within each VPC, there are two subnets, to which custom route table and internet gateway is attached. Apart from default route allowing the traffic flowing between subnets in the same VPC, additional routes are configured allowing traffic to the internet through internet gateway and to other VPC through transit gateway. Each subnet consists of one webserver instance used to test the transit gateway connection between the VPCs/subnets.
+This demo consists of two VPCs, both deployed in the same region (*eu-west-2*). Within each VPC, there are two subnets, to which custom route table and internet gateway are attached. Apart from default route allowing the traffic flowing between subnets in the same VPC, additional routes are configured allowing traffic to the internet through internet gateway and to other VPC through transit gateway. Each subnet consists of one webserver instance used to test the transit gateway connection between the VPCs/subnets.
 
-[*main.tf*](https://github.com/MihaMarkocic/cloudservices/blob/master/AWS/transit_gateway/main.tf) is the main Terraform file with defined region, provider, outputs and modules used to create transit gateway between VPCs. Network infrastructure (creation of VPCs, subnets, route tables, internet gateways and routes) was done in the Network module. Compute module was used twice - reusing the file to create instance in two subnets of the defined VPC. Seperated in Transit module is the creation of transit gateway connecting both VPCs by attaching them to the transit gateway and setting the routes pointing in the direction of the other VPC. 
+[*main.tf*](https://github.com/MihaMarkocic/cloudservices/blob/master/AWS/transit_gateway/main.tf) is the main Terraform file with the defined region, provider, outputs and modules used to create transit gateway between VPCs. Network infrastructure (creation of VPCs, subnets, route tables, internet gateways and routes) was done in the Network module. Compute module was used twice - reusing the file to create an instance in two subnets of the defined VPC. Separated in Transit module is the creation of transit gateway connecting both VPCs by attaching them to the transit gateway and setting the routes pointing in the direction of the other VPC. 
 
 Modules subdirectory consist of:
 
@@ -14,12 +14,12 @@ Modules subdirectory consist of:
     4. Create security groups for public instances:
         - in VPC A *(SSH\* allowed from anywhere, HTTP allowed from both VPCs, ICMP ping allowed from both VPCs; all outbound traffic allowed)*
         - in VPC B *(SSH\* allowed from anywhere, HTTP allowed from both VPCs, ICMP ping allowed from both VPCs; all outbound traffic allowed)*
-    5. Create internet gateway and route table in VPC A and B. Within each VPC associate both subnets to the route table and set the routes: 
-        - routing the packects going to *(0.0.0.0/0)* through internet gateway
-        - routing the packets going to the other VPC through transit gateway 
+    5. Create an internet gateway and route table in VPC A and B. Within each VPC associate both subnets to the route table and set the routes: 
+        - routing the packets going to *(0.0.0.0/0)* through the internet gateway
+        - routing the packets going to the other VPC through the transit gateway 
 
 - [Transit](https://github.com/MihaMarkocic/cloudservices/tree/master/AWS/transit_gateway/modules/transit):
-    1. Create Transit gateway with default route table connecting VPC A and VPC B.
+    1. Create a transit gateway with default route table connecting VPC A and VPC B.
     2. Attach VPC A with its subnets to the transit gateway and its default route table.
     3. Attach VPC B with its subnets to the transit gateway and its default route table.
     4. Define transit gateway route in default route table pointing to VPC A.
@@ -58,7 +58,7 @@ Ansible playbook is executed on all 4 hosts (webservers) simultaneously, testing
     ansible-playbook -u *username* --private-key *path/to/your/sshkey* -i aws_ec2.yml connection_test.yml
     ```
 
-As mentioned the Ansible playbook connects over SSH to each instance deployed and tries to reach other instances over privte IPs on port 80. For that purpose, the security group of webservers allows only SSH inbound traffic from "outside", while HTTP traffic is allowed from within both VPCs. If there are no errors during the deployment, the playbook should succesfully finish with all connections tested.
+As mentioned the Ansible playbook connects over SSH to each instance deployed and tries to reach other instances over private IPs on port 80. For that purpose, the security group of webservers allows only SSH inbound traffic from "outside", while HTTP traffic is allowed from within both VPCs. If there are no errors during the deployment, the playbook should successfully finish with all connections tested.
 
 
 \*  *SSH traffic to your subnet should be allowed only from your IP address or IP address range*
