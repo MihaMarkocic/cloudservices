@@ -56,13 +56,7 @@ resource "aws_route" "publicRoute" {
     gateway_id = aws_internet_gateway.myIG.id
 }
 
-# routes to transit gateway
-
-resource "aws_route" "transitRoute1" {
-    route_table_id = aws_route_table.myRT.id
-    destination_cidr_block = var.transit_dest_cidr1
-    transit_gateway_id = var.transit_gateway_id
-}
+# multicast route through transit gateway
 
 resource "aws_route" "multicastRoute" {
     route_table_id = aws_route_table.myRT.id
@@ -96,8 +90,8 @@ resource "aws_security_group" "customSG" {
         description = "allow custom multicast UDP traffic"
         protocol = "udp"
         cidr_blocks = [aws_vpc.myVPC.cidr_block, var.transit_dest_cidr1]
-        from_port = 143
-        to_port = 143
+        from_port = 5001
+        to_port = 5001
     }
 
     ingress {
