@@ -48,7 +48,7 @@ resource "aws_route_table_association" "associateRT" {
     route_table_id = aws_route_table.myRT.id
 }
 
-# create custom routes
+# create public custom route
 
 resource "aws_route" "publicRoute" {
     route_table_id = aws_route_table.myRT.id
@@ -56,13 +56,6 @@ resource "aws_route" "publicRoute" {
     gateway_id = aws_internet_gateway.myIG.id
 }
 
-# multicast route through transit gateway
-
-resource "aws_route" "multicastRoute" {
-    route_table_id = aws_route_table.myRT.id
-    destination_cidr_block = var.multicast_dest_cidr
-    transit_gateway_id = var.transit_gateway_id
-}
 
 # security group
 
@@ -79,28 +72,11 @@ resource "aws_security_group" "customSG" {
     }
 
     ingress {
-        description = "allow HTTP from owned VPCs"
-        protocol = "tcp"
-        cidr_blocks = [var.transit_dest_cidr1]
-        from_port = 80
-        to_port = 80
-    }
-
-    ingress {
         description = "allow custom multicast UDP traffic"
         protocol = "udp"
         cidr_blocks = [aws_vpc.myVPC.cidr_block, var.transit_dest_cidr1]
         from_port = 5001
         to_port = 5001
-    }
-
-    ingress {
-        description = "allow ping test from owned VPCs"
-        protocol = "icmp"
-        cidr_blocks = [var.transit_dest_cidr1]
-        from_port = 8  # icmp type number
-        to_port = 0 # icmp code
-        
     }
 
     egress {

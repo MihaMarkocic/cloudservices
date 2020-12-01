@@ -36,17 +36,6 @@ variable "public_dest_cidr" {
     default = "0.0.0.0/0"
 }
 
-variable "transit_dest_cidr1" {
-    description = "packets destination cidr over transit gateway 1st connection"
-    type = string
-    default = ""
-}
-
-variable "multicast_dest_cidr" {
-    description = "multicast group ip address"
-    type = string
-    default = "239.0.0.1/32"
-}
 
 variable "transit_gateway_id" {
     description = "id of created Transit Gateway"
