@@ -91,6 +91,20 @@ module "compute_c" {
     instance_role_tag = "multicast_receiver"
 }
 
+# outputs needed for transit gateway multicast setup:
+
 output "transit_gateway_id" {
     value = module.transit.tg_id
+}
+
+output "VPC_A_instance_NIC_id" {
+    value = module.compute_a.instance_nic_id
+}
+
+output "VPC_B_instance_NIC_id" {
+    value = module.compute_b.instance_nic_id
+}
+
+output "VPC_C_instance_NIC_id" {
+    value = module.compute_c.instance_nic_id
 }

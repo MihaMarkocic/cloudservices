@@ -57,3 +57,8 @@ resource "aws_instance" "instanceA" {
         Role = var.instance_role_tag
     }
 }
+
+#outputs needed to later set up the transit gateway ip multicast in AWS CLI
+output "instance_nic_id" {
+    value = aws_instance.instanceA.primary_network_interface_id
+}
