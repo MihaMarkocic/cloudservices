@@ -29,18 +29,3 @@ variable "vpc_b_subnet1_id" {
     type = string
     default = ""
 }
-
-variable "vpc_c_id" {
-    type = string
-    default = ""
-}
-
-variable "vpc_c_cidr" {
-    type = string
-    default = ""
-}
-
-variable "vpc_c_subnet1_id" {
-    type = string
-    default = ""
-}

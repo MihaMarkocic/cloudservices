@@ -40,14 +40,6 @@ resource "aws_ec2_transit_gateway_vpc_attachment" "vpcBtgw" {
   transit_gateway_default_route_table_propagation = true
 }
 
-resource "aws_ec2_transit_gateway_vpc_attachment" "vpcCtgw" {
-  subnet_ids = ["${var.vpc_c_subnet1_id}"]
-  transit_gateway_id = data.aws_ec2_transit_gateway.tgw.id
-  vpc_id = var.vpc_c_id
-  transit_gateway_default_route_table_association = true
-  transit_gateway_default_route_table_propagation = true
-}
-
 #create transit gateway routes
 
 resource "aws_ec2_transit_gateway_route" "routetoA" {
@@ -59,12 +51,6 @@ resource "aws_ec2_transit_gateway_route" "routetoA" {
 resource "aws_ec2_transit_gateway_route" "routetoB" {
   destination_cidr_block = var.vpc_b_cidr
   transit_gateway_attachment_id = aws_ec2_transit_gateway_vpc_attachment.vpcBtgw.id
-  transit_gateway_route_table_id = data.aws_ec2_transit_gateway.tgw.association_default_route_table_id
-}
-
-resource "aws_ec2_transit_gateway_route" "routetoC" {
-  destination_cidr_block = var.vpc_c_cidr
-  transit_gateway_attachment_id = aws_ec2_transit_gateway_vpc_attachment.vpcCtgw.id
   transit_gateway_route_table_id = data.aws_ec2_transit_gateway.tgw.association_default_route_table_id
 }
 
@@ -80,8 +66,4 @@ output "tg_vpc_a_attachment" {
 
 output "tg_vpc_b_attachment" {
     value = aws_ec2_transit_gateway_vpc_attachment.vpcBtgw.id
-}
-
-output "tg_vpc_c_attachment" {
-    value = aws_ec2_transit_gateway_vpc_attachment.vpcCtgw.id
 }
