@@ -65,12 +65,12 @@ module "compute_b" {
     instance_role_tag = "multicast_receiver"
 }
 
-module "compute_c" {
+module "compute_b2" {
     source = "./modules/compute"
 
-    subnet_id = module.vpc_c.subnet_id
-    security_group_id = module.vpc_c.security_group_id
-    instance_name_tag = "webserver_1(VPC-C)"
+    subnet_id = module.vpc_b.subnet_id
+    security_group_id = module.vpc_b.security_group_id
+    instance_name_tag = "webserver_2(VPC-B)"
     instance_role_tag = "multicast_receiver"
 }
 

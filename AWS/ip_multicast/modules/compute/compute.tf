@@ -19,7 +19,7 @@ data "aws_ami" "ubuntu" {
 
 # deploy instances in the subnets
 
-resource "aws_instance" "instanceA" {
+resource "aws_instance" "webserver" {
     ami = data.aws_ami.ubuntu.id
     instance_type = var.instance_type
     subnet_id = var.subnet_id
@@ -60,5 +60,5 @@ resource "aws_instance" "instanceA" {
 
 #outputs needed to later set up the transit gateway ip multicast in AWS CLI
 output "instance_nic_id" {
-    value = aws_instance.instanceA.primary_network_interface_id
+    value = aws_instance.webserver.primary_network_interface_id
 }
