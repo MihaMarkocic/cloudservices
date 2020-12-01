@@ -42,6 +42,12 @@ variable "transit_dest_cidr1" {
     default = ""
 }
 
+variable "multicast_dest_cidr" {
+    description = "multicast group ip address"
+    type = string
+    default = "239.0.0.1/32"
+}
+
 variable "transit_gateway_id" {
     description = "id of created Transit Gateway"
     type = string

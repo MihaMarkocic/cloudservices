@@ -64,6 +64,12 @@ resource "aws_route" "transitRoute1" {
     transit_gateway_id = var.transit_gateway_id
 }
 
+resource "aws_route" "multicastRoute" {
+    route_table_id = aws_route_table.myRT.id
+    destination_cidr_block = var.multicast_dest_cidr
+    transit_gateway_id = var.transit_gateway_id
+}
+
 # security group
 
 resource "aws_security_group" "customSG" {
