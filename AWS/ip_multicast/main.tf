@@ -21,7 +21,6 @@ module "vpc_a" {
     vpc_name_tag = "VPC-A"
     subnet_cidr = "10.0.1.0/24"
     subnet_name_tag = "subnet1"
-    transit_dest_cidr1 = module.vpc_b.vpc_cidr
     transit_gateway_id = module.transit.tg_id
 }
 
@@ -32,7 +31,6 @@ module "vpc_b" {
     vpc_name_tag = "VPC-B"
     subnet_cidr = "10.10.1.0/24"
     subnet_name_tag = "subnet1"
-    transit_dest_cidr1 = module.vpc_a.vpc_cidr
     transit_gateway_id = module.transit.tg_id
 }
 
