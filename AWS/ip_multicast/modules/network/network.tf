@@ -74,7 +74,7 @@ resource "aws_security_group" "customSG" {
     ingress {
         description = "allow custom multicast UDP traffic"
         protocol = "udp"
-        cidr_blocks = [aws_vpc.myVPC.cidr_block, var.transit_dest_cidr1]
+        cidr_blocks = ["0.0.0.0/0"]
         from_port = 5001
         to_port = 5001
     }
