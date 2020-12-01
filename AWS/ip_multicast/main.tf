@@ -56,7 +56,7 @@ module "compute_a" {
     instance_role_tag = "multicast_source"
 }
 
-module "compute_b" {
+module "compute_b1" {
     source = "./modules/compute"
 
     subnet_id = module.vpc_b.subnet_id
@@ -96,10 +96,14 @@ output "vpc_b_subnet_id" {
     value = module.vpc_b.subnet_id
 }
 
-output "VPC_A_instance_NIC_id" {
+output "vpc_a_instance1_NIC_id" {
     value = module.compute_a.instance_nic_id
 }
 
-output "VPC_B_instance_NIC_id" {
-    value = module.compute_b.instance_nic_id
+output "vpc_b_instance1_NIC_id" {
+    value = module.compute_b1.instance_nic_id
+}
+
+output "vpc_b_instance2_NIC_id" {
+    value = module.compute_b2.instance_nic_id
 }
