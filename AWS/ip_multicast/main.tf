@@ -97,6 +97,22 @@ output "transit_gateway_id" {
     value = module.transit.tg_id
 }
 
+output "tg_vpc_a_attachment_id" {
+    value = module.transit.tg_vpc_a_attachment
+}
+
+output "vpc_a_subnet_id" {
+    value = module.vpc_a.subnet_id
+}
+
+output "tg_vpc_b_attachment_id" {
+    value = module.transit.tg_vpc_b_attachment
+}
+
+output "vpc_b_subnet_id" {
+    value = module.vpc_b.subnet_id
+}
+
 output "VPC_A_instance_NIC_id" {
     value = module.compute_a.instance_nic_id
 }
