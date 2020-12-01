@@ -22,7 +22,6 @@ module "vpc_a" {
     subnet_cidr = "10.0.1.0/24"
     subnet_name_tag = "subnet1"
     transit_dest_cidr1 = module.vpc_b.vpc_cidr
-    transit_dest_cidr2 = module.vpc_c.vpc_cidr
     transit_gateway_id = module.transit.tg_id
 }
 
@@ -34,19 +33,6 @@ module "vpc_b" {
     subnet_cidr = "10.10.1.0/24"
     subnet_name_tag = "subnet1"
     transit_dest_cidr1 = module.vpc_a.vpc_cidr
-    transit_dest_cidr2 = module.vpc_c.vpc_cidr
-    transit_gateway_id = module.transit.tg_id
-}
-
-module "vpc_c" {
-    source = "./modules/network"
-    
-    vpc_cidr = "10.20.0.0/16"
-    vpc_name_tag = "VPC-B"
-    subnet_cidr = "10.20.1.0/24"
-    subnet_name_tag = "subnet1"
-    transit_dest_cidr1 = module.vpc_a.vpc_cidr
-    transit_dest_cidr2 = module.vpc_b.vpc_cidr
     transit_gateway_id = module.transit.tg_id
 }
 
@@ -59,9 +45,6 @@ module "transit" {
     vpc_b_id = module.vpc_b.vpc_id
     vpc_b_cidr = module.vpc_b.vpc_cidr
     vpc_b_subnet1_id = module.vpc_b.subnet_id
-    vpc_c_id = module.vpc_c.vpc_id
-    vpc_c_cidr = module.vpc_c.vpc_cidr
-    vpc_c_subnet1_id = module.vpc_c.subnet_id
 }
 
 module "compute_a" {
@@ -119,8 +102,4 @@ output "VPC_A_instance_NIC_id" {
 
 output "VPC_B_instance_NIC_id" {
     value = module.compute_b.instance_nic_id
-}
-
-output "VPC_C_instance_NIC_id" {
-    value = module.compute_c.instance_nic_id
 }

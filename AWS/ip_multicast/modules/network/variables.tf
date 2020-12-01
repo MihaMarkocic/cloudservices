@@ -42,12 +42,6 @@ variable "transit_dest_cidr1" {
     default = ""
 }
 
-variable "transit_dest_cidr2" {
-    description = "packets destination cidr over transit gateway 2st connection"
-    type = string
-    default = ""
-}
-
 variable "transit_gateway_id" {
     description = "id of created Transit Gateway"
     type = string

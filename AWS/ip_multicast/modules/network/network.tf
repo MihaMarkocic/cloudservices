@@ -64,12 +64,6 @@ resource "aws_route" "transitRoute1" {
     transit_gateway_id = var.transit_gateway_id
 }
 
-resource "aws_route" "transitRoute2" {
-    route_table_id = aws_route_table.myRT.id
-    destination_cidr_block = var.transit_dest_cidr2
-    transit_gateway_id = var.transit_gateway_id
-}
-
 # security group
 
 resource "aws_security_group" "customSG" {
@@ -87,7 +81,7 @@ resource "aws_security_group" "customSG" {
     ingress {
         description = "allow HTTP from owned VPCs"
         protocol = "tcp"
-        cidr_blocks = [var.transit_dest_cidr1, var.transit_dest_cidr2]
+        cidr_blocks = [var.transit_dest_cidr1]
         from_port = 80
         to_port = 80
     }
@@ -95,7 +89,7 @@ resource "aws_security_group" "customSG" {
     ingress {
         description = "allow custom multicast UDP traffic"
         protocol = "udp"
-        cidr_blocks = [aws_vpc.myVPC.cidr_block, var.transit_dest_cidr1, var.transit_dest_cidr2]
+        cidr_blocks = [aws_vpc.myVPC.cidr_block, var.transit_dest_cidr1]
         from_port = 143
         to_port = 143
     }
@@ -103,7 +97,7 @@ resource "aws_security_group" "customSG" {
     ingress {
         description = "allow ping test from owned VPCs"
         protocol = "icmp"
-        cidr_blocks = [var.transit_dest_cidr1, var.transit_dest_cidr2]
+        cidr_blocks = [var.transit_dest_cidr1]
         from_port = 8  # icmp type number
         to_port = 0 # icmp code
         
