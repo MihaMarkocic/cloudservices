@@ -9,7 +9,7 @@ resource "aws_ec2_transit_gateway" "tgw" {
     dns_support = "enable"
 
     tags = {
-        Name = "${var.region}-tg"
+        Name = "multicast-tg"
     }
 }
 

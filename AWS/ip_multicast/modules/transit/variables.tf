@@ -1,10 +1,5 @@
 # variables for transit.tf 
 
-variable "region" {
-    type = string
-    default = ""
-}
-
 variable "vpc_a_id" {
     type = string
     default = ""
