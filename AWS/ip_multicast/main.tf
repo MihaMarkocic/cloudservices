@@ -52,6 +52,7 @@ module "compute_a" {
 
     subnet_id = module.vpc_a.subnet_id
     security_group_id = module.vpc_a.security_group_id
+    instance_type = "t3a.nano"
     instance_name_tag = "webserver_1(VPC-A)"
     instance_role_tag = "multicast_source"
 }
