@@ -6,7 +6,7 @@ This demo consists of two VPCs created in the same region, each having one publi
 
 [*main.tf*](https://github.com/MihaMarkocic/cloudservices/blob/master/AWS/ip_multicast/main.tf) is the main Terraform file with the defined region, provider, outputs and modules used to create multicast communication with transit gateway. Network infrastructure (creation of VPCs, subnets, route tables, internet gateways and routes) was done in the Network module which was used twice - once per VPC. Compute module which consists of creating an instance and installing appropriate software through remote provisioner was used three times - to create one instance in VPC A and two instances in VPC B. As Terraform does not have support for transit gateway multicast, a part of transit gateway setup was moved to the AWS CLI. Therefore the Transit module is responsible to get the ID of transit gateway created with AWS CLI and attach VPCs with their subnets to that transit gateway. This file also outputs some of the infrastructure IDs which are crucial for the creation of transit gateway multicast domains and associations later in the AWS CLI. 
 
-Steps to deploy this infrastructure with AWS CLI and Terraform combined are explained below under *"Deployment Steps"* section.
+Steps to deploy this infrastructure with AWS CLI and Terraform combined are explained below under *"Deployment steps"* section.
 
 ### Modules
 - [Network](https://github.com/MihaMarkocic/cloudservices/tree/master/AWS/ip_multicast/modules/network):
@@ -33,6 +33,7 @@ Steps to deploy this infrastructure with AWS CLI and Terraform combined are expl
         - through "remote-exec" provisioner install apache2 service
      
 \*  *SSH traffic to your subnet should be allowed only from your IP address or IP address range*
+
 \** *Only **AWS Nitro** instances can be used as a multicast source! Using non-Nitro instance as a multicast receiver requires disabling the Source/Dest check!*
 
 ## Deployment steps 
@@ -131,7 +132,7 @@ Some attention should be given also when destroying the instances. When deployin
     ```
     aws ec2 delete-transit-gateway-multicast-domain --transit-gateway-multicast-domain-id tgw-mcast-domain-12345
     ```
-4. destroy the infrastructure/resources created with Terraform using `terraform destroy`. By this time, no associations to AWS CLI created resources should remain.
+4. Destroy the infrastructure/resources created with Terraform using `terraform destroy`. By this time, no associations to AWS CLI created resources should remain.
 5. Finally, delete the transit gateway.
     ```
     aws ec2 delete-transit-gateway --transit-gateway-id tgw-12345
