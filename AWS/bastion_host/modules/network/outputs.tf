@@ -1,26 +1,31 @@
 #outputs of network.tf resources for use in other modules
 
-output "pubSubnetId" {
-	value = aws_subnet.publicSubnet.id
-	description = "id of public subnet"
+output "pubSub1Id" {
+	value = aws_subnet.publicSub1.id
+	description = "id of public subnet 1"
 }
 
-output "prvtSubnetId" {
-	value = aws_subnet.privateSubnet.id
-	description = "id of private subnet"
+output "pubSub2Id" {
+	value = aws_subnet.publicSub2.id
+	description = "id of public subnet 2"
+}
+
+output "prvtSub1Id" {
+	value = aws_subnet.privateSub1.id
+	description = "id of private subnet 1"
 }
 
 output "webserverSGId" {
 	value = [ "${aws_security_group.webserverSG.id}" ]
-	description = "id of a webserver security group for ec2 instance"
+	description = "id of a webserver security group for ec2 instances"
 }
 
-output "jumpHostSGId" {
-	value = [ "${aws_security_group.jumpHostSG.id}" ]
-	description = "id of a jump host security group for ec2 instance"
+output "bastionSGId" {
+	value = [ "${aws_security_group.bastionSG.id}" ]
+	description = "id of a bastion security group for ec2 instance"
 }
 
-output "privateSGId" {
-	value = [ "${aws_security_group.privateSG.id}" ]
-	description = "id of a private security group for ec2 instance"
+output "databaseSGId" {
+	value = [ "${aws_security_group.databaseSG.id}" ]
+	description = "id of a database security group"
 }

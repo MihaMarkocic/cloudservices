@@ -1,14 +1,9 @@
-# main terraform module to deploy AWS network infrastructure
+# main terraform module to deploy AWS bastion host infrastructure demo
 
-# this is required for the terraform 0.13+ version!
-#terraform {
-#  required_providers {
-#    aws = {
-#      source  = "hashicorp/aws"
-#    }
-#  }
-#}
-
+variable "region" {
+	description = "select the region of deployment"
+	default = "eu-west-2"
+}
 
 provider "aws" {
     region = var.region
@@ -16,6 +11,7 @@ provider "aws" {
 
 module "network" {
     source = "./modules/network"
+
 }
 
 module "instances" {

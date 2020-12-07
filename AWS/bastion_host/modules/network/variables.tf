@@ -1,46 +1,27 @@
 # variables for network.tf
 
-variable "availabilityZone" {
+variable "region" {
     type = string
-    default = "us-east-2a"
+    default = ""
 }
 
-variable "vpcCIDR" {
+variable "vpc_cidr" {
     type =  string
     default = "10.0.0.0/16"
 }
 
-variable "enableDnsSupport" {
-    type = bool
-    default = true
-}
 
-variable "enableDnsHostnames" {
-    type = bool
-    default = true
-}
-
-variable "pubSubnetCIDR" {
+variable "pub1_cidr" {
     type = string
     default = "10.0.1.0/24"
 }
 
-variable "mapPublicIP" {
-    type = bool
-    default = true
-}
-
-variable "prSubnetCIDR" {
+variable "pub2_cidr" {
     type = string
     default = "10.0.2.0/24"
 }
 
-variable "mapPrivateIP" {
-    type = bool
-    default = false
-}
-
-variable "routeCIDR" {
+variable "prvt1_cidr" {
     type = string
-    default = "0.0.0.0/0"
+    default = "10.0.3.0/24"
 }
