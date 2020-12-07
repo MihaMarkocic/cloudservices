@@ -31,6 +31,21 @@ resource "aws_instance" "bastion" {
 		Name = "Bastion Host"
 		type = "bastionhost"
 	}
+
+	connection {
+		host = self.public_ip
+		user = var.instance_user
+		type = "ssh"
+		private_key = file(var.key_loc)
+	}
+
+	provisioner "remote-exec" {
+		inline = [
+			"sudo wget https://raw.githubusercontent.com/MihaMarkocic/cloudservices/master/AWS/bastion_host/init_files/bastion_init.sh",
+			"sudo chmod 774 bastion_init.sh",
+			"sudo ./bastion_init.sh"
+		]
+	}
 }
 
 # deploy webserver in public subnet 1
@@ -59,7 +74,9 @@ resource "aws_instance" "webserver1" {
 	
 	provisioner "remote-exec" {
 		inline = [
-			"sudo apt-get -y update",
+			"sudo wget https://raw.githubusercontent.com/MihaMarkocic/cloudservices/master/AWS/bastion_host/init_files/webserver_init.sh",
+			"sudo chmod 774 webserver_init.sh",
+			"sudo ./webserver_init.sh"
 		]
 	}
 }
@@ -90,7 +107,9 @@ resource "aws_instance" "webserver2" {
 	
 	provisioner "remote-exec" {
 		inline = [
-			"sudo apt-get -y update",
+			"sudo wget https://raw.githubusercontent.com/MihaMarkocic/cloudservices/master/AWS/bastion_host/init_files/webserver_init.sh",
+			"sudo chmod 774 webserver_init.sh",
+			"sudo ./webserver_init.sh"
 		]
 	}
 }
@@ -106,7 +125,7 @@ resource "aws_instance" "database" {
 	key_name = var.ssh_key
 	
 	tags = {
-		Name = "PrivateVM"
-		type = "private"
+		Name = "Database"
+		type = "database"
 	}
 }
