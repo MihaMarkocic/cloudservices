@@ -17,11 +17,12 @@ module "network" {
 module "instances" {
 	source = "./modules/compute"
 	
-	pubSubnetID = module.network.pubSubnetId
-	prvtSubnetID = module.network.prvtSubnetId
-	webserverSgId = module.network.webserverSGId
-	jumpHostSgId = module.network.jumpHostSGId
-	privateSgId = module.network.privateSGId
+	pub_sub1_id = module.network.pubSub1ID
+	pub_sub2_id = module.network.pubSub2ID
+	prvt_sub1_id = module.network.prvtSub1ID
+	webserver_sg_id = module.network.webserverSGID
+	bastion_sg_id = module.network.bastionSGID
+	database_sg_id = module.network.databaseSGID
 }
 
 output "webserver_public_ip" {

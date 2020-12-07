@@ -1,61 +1,57 @@
+# variables for compute.tf
 
-
-variable "instanceAmi" {
-    description = "Ubuntu Server 18.04 LTS (64-bit)"
-    default = "ami-0d5d9d301c853a04a" 
-}
-
-variable "instanceType" {
+variable "instance_type" {
     type = string
     default = "t2.micro"
 }
 
-variable "pubSubnetID" {
-    description = "public subnet ID from network.tf"
+variable "pub_sub1_id" {
+    description = "public subnet 1 ID from network.tf"
     type = string
     default = ""
 }
 
-variable "prvtSubnetID" {
-    description = "private subnet ID from network.tf"
+variable "pub_sub2_id" {
+    description = "public subnet 2 ID from network.tf"
     type = string
     default = ""
 }
 
-variable "ec2AvailabilityZone" {
+variable "prvt_sub1_id" {
+    description = "private subnet 1 ID from network.tf"
     type = string
-    default = "us-east-2a"
+    default = ""
 }
 
-variable "webserverSgId" {
+variable "webserver_sg_id" {
     description = "webserver security group id form network.tf"
     type = list(string)
     default = null
 }
 
-variable "jumpHostSgId" {
-    description = "jump host security group id form network.tf"
+variable "bastion_sg_id" {
+    description = "jump host / bastion security group id form network.tf"
     type = list(string)
     default = null
 }
 
-variable "privateSgId" {
+variable "database_sg_id" {
     description = "private security group id form network.tf"
     type = list(string)
     default = null
 }
 
-variable "pubSshKey" {
+variable "ssh_key" {
     type = string
     default = "id_rsa_webserver"
 }
 
-variable "sshKeyLoc" {
+variable "key_loc" {
     type = string
     default = "~/.ssh/id_rsa_webserver"
 }
 
-variable "instanceUser" {
+variable "instance_user" {
     type = string
     default = "ubuntu"
 }
