@@ -25,14 +25,18 @@ module "instances" {
 	database_sg_id = module.network.databaseSGID
 }
 
-output "webserver_public_ip" {
-	value = module.instances.webserverPubIP
+output "webserver1_public_ip" {
+	value = module.instances.webserver1PubIP
 }
 
-output "jumpHost_public_ip" {
-	value = module.instances.jumpHostPubIP
+output "webserver2_public_ip" {
+	value = module.instances.webserver2PubIP
 }
 
-output "private_vm_private_ip" {
-	value = module.instances.privateVMprvtIP
+output "jumphost_public_ip" {
+	value = module.instances.bastionPubIP
+}
+
+output "database_private_ip" {
+	value = module.instances.databasePrvtIP
 }

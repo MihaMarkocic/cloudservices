@@ -164,7 +164,7 @@ resource "aws_security_group" "bastionSG" {
 
 # create private instance / Database security group
 
-resource "aws_security_group" "DatabaseSG" {
+resource "aws_security_group" "databaseSG" {
 	vpc_id = aws_vpc.bastionVPC.id
 	name = "Database SG"
 
