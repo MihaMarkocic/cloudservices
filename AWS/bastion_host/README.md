@@ -1,27 +1,10 @@
-# Virtual network infrastructure deployment Example
-In this example, an AWS network infrastructure with webserver, bastion host and private EC2 instance is deployed:
+# Bastion host deployment Example
+This example demonstrates how to set up and deploy a Bastion host in an AWS cloud deployment. A bastion host is a server whose purpose is to provide access to other/private instances in your network. This way, you can mitigate the risk of allowing SSH connection from an external network to your private instances in a VPC. 
 
-- Network infrastructure:
-    1. Create a new VPC *(10.0.0.0/16)*
-    2. Create one public *(10.0.1.0/24)* and one private *(10.0.2.0/24)* subnet
-    3. Create internet gateway and associate it with VPC
-    4. Create a new route table and add a route towards internet gateway for public subnet traffic
-    5. Create webserver SG (HTTP, HTTPS from anywhere, SSH from jumphost SG; HTTP, HTTPS to anywhere)
-    6. Create jumphost SG (SSH from anywhere*; SSH to VPC range)
-    7. Create private SG (SSH from jumphost SG; HTTP from webserver SG and private SG; HTTP to private SG)
+## Details
+The infrastructure consists of one VPC with 3 subnets (2 public and 1 private). Public subnets are associated with custom route table and a route to the external network through a custom internet gateway. Both public subnets have one webserver, while private subnet has a private instance (such as a database). Bastion host *(also Jump host)* is deployed in one of the public subnets, and serves the purpose to provide the SSH connection to other instances. The accessibility of each instance is limited with custom security groups. Webservers are allowed HTTP and HTTPS traffic from an outside network, while database instance is allowed MySQL and HTTP from public subnets only. Both types of instances allow SSH connection from the bastion host security group only. A bastion host has its own security group allowing only SSH connection.
 
+[*main.tf*](https://github.com/MihaMarkocic/cloudservices/blob/master/AWS/bastion_host/main.tf)file is the main Terraform file used to deploy this demo. This is where the region of deployment, provider and modules are defined. Network infrastructure part of this deployment, including subnet route table internet gateway and security groups creation, is defined in the *Network module*. Deployment of EC2 instances (webservers, private instances and bastion host) is defined in *Compute module*. Apart from modules, short initialization files for webservers and bastion host are available in a separate *init_files* folder.
 
-- EC2 instance deployment:
-    1. Deploy jumpbox instance used for SSH connection to other instances created in the VPC
-    2. Deploy webserver instance in public subnet
-        - the SSH connection** to this instance is established using key and *bastion_host* option
-        - "*remote-exec*" Terraform provisioner is used to update apt-get, and wait for instance to actually launch***
-        - "*local-exec*" Terraform provisioner is used to run Ansible playbooks - installation of apache service. Ansible uses dynamic inventory plugin (*aws_ec2*) with appropriate filters to identify the target instance.
-    3. Deploy private instance in private subnet
-
-
-\* *SSH should be allowed only from a particular IP Address (your public IP) or IP Address range. Having it set to "all/anywhere" is used just for demo purposes!*
-
-\** *for an SSH connection to a remote server using a jump box with -J flag (ssh -J user@jumpbox user@destination), an SSH agent must be started and SSH key added*
-
-\*** *Terraform "remote-exec" provisioner waits until the instance is launched, while "local-exec" provisioner starts regardless of the instance status!*
+### Modules
+- [*Network*](https://github.com/MihaMar
