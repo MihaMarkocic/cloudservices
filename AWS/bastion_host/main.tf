@@ -29,8 +29,16 @@ output "webserver1_public_ip" {
 	value = module.instances.webserver1PubIP
 }
 
+output "webserver1_private_ip" {
+	value = module.instances.webserver1PrvtIP
+}
+
 output "webserver2_public_ip" {
 	value = module.instances.webserver2PubIP
+}
+
+output "webserver2_private_ip" {
+	value = module.instances.webserver2PrvtIP
 }
 
 output "jumphost_public_ip" {
