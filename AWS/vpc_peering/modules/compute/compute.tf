@@ -12,7 +12,7 @@ data "aws_ami" "ubuntu" {
 
     filter {
         name = "name"
-        values = ["ubuntu/images/hvm-ssd/ubuntu-bionic*"]
+        values = ["ubuntu/images/hvm-ssd/ubuntu-focal*"]
     }
 
     filter {
@@ -42,6 +42,7 @@ resource "aws_instance" "instanceA" {
     provisioner "remote-exec" {
         inline = [
             "sudo apt-get -y update",
+            "sudo apt-get -y upgrade",
             "sudo apt-get install -y apache2"
         ]
 

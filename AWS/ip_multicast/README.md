@@ -26,7 +26,7 @@ Steps to deploy this infrastructure with AWS CLI and Terraform combined are expl
     3. Attach VPC B with its subnet to the transit gateway and its default route table.
 
 - [Compute](https://github.com/MihaMarkocic/cloudservices/tree/master/AWS/ip_multicast/modules/compute):
-    1. Obtain AWS AMI ID for the desired os *(Ubuntu Server 18.04 LTS from Canonical)* in a defined region
+    1. Obtain AWS AMI ID for the desired os *(Ubuntu Server 20.04 LTS from Canonical)* in a defined region
     2. Deploy one server instance in a selected VPC/subnet and
         - choose the right instance type\**!
         - associate it with the custom security group

@@ -9,7 +9,7 @@ In this example, an AWS network infrastructure (VPC and public subnet) with 3 we
     5. Create webserver SG *(HTTP, HTTPS and SSH from anywhere; HTTP, HTTPS to anywhere)*
 
 - EC2 instance deployment:
-    1. Obtain AWS AMI ID for the desired os *(Ubuntu Server 18.04 LTS from Canonical)*
+    1. Obtain AWS AMI ID for the desired os *(Ubuntu Server 20.04 LTS from Canonical)*
     2. Deploy 3 webserver instances in a created public subnet
     3. Update apt-get on each instance using *"remote-exec"* Terraform provisioner
     4. Run Ansible playbook* using *"local-exec"* Terraform provisioner to:

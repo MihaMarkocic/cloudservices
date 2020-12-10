@@ -19,7 +19,7 @@ The infrastructure consists of one VPC with 3 subnets (2 public and 1 private). 
 
 
 - [*Compute*](https://github.com/MihaMarkocic/cloudservices/tree/master/AWS/bastion_host/modules/compute):
-    1. Obtain AWS AMI ID for the desired os *(Ubuntu Server 18.04 LTS from Canonical)* in a defined region
+    1. Obtain AWS AMI ID for the desired os *(Ubuntu Server 20.04 LTS from Canonical)* in a defined region
     2. Deploy bastion host instance in a public subnet and:
         - define connection parameters (ssh key, IP address and user) for provisioner
         - use *remote-exec* Terraform provisioner to download [*bastion initialization*](https://github.com/MihaMarkocic/cloudservices/blob/master/AWS/bastion_host/init_files/bastion_init.sh) shell script from this Github repository and run it to install apache2 service and configure firewall rules 

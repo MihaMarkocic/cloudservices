@@ -8,7 +8,7 @@ data "aws_ami" "ubuntu" {
 
     filter {
         name = "name"
-        values = ["ubuntu/images/hvm-ssd/ubuntu-bionic*"]
+        values = ["ubuntu/images/hvm-ssd/ubuntu-focal*"]
     }
 
     filter {
@@ -37,16 +37,8 @@ resource "aws_instance" "instanceA" {
     
     provisioner "remote-exec" {
         inline = [
-            "sudo apt-get -y update"
-        ]
-    }
-
-    provisioner "remote-exec" {
-        inline = [
-            "sudo apt-get -f autoremove",
             "sudo apt-get -y update",
             "sudo apt-get -y upgrade",
-            "sudo apt-get -y dist-upgrade",
             "sudo apt-get install -y apache2"
         ]
     }
@@ -74,16 +66,8 @@ resource "aws_instance" "instanceB" {
 
     provisioner "remote-exec" {
         inline = [
-            "sudo apt-get -y update"
-        ]
-    }
-
-    provisioner "remote-exec" {
-        inline = [
-            "sudo apt-get -f autoremove",
             "sudo apt-get -y update",
             "sudo apt-get -y upgrade",
-            "sudo apt-get -y dist-upgrade",
             "sudo apt-get install -y apache2"
         ]
     }

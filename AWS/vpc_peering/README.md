@@ -23,7 +23,7 @@ Modules subdirectory consist of:
     5. Vice versa - route on the accepter's route table pointing to requester's VPC CIDR block
 
 - [Compute](https://github.com/MihaMarkocic/cloudservices/tree/master/AWS/vpc_peering/modules/compute):
-    1. Obtain AWS AMI ID for the desired os *(Ubuntu Server 18.04 LTS from Canonical)* in a defined region
+    1. Obtain AWS AMI ID for the desired os *(Ubuntu Server 20.04 LTS from Canonical)* in a defined region
     2. Deploy 1 server instance in a created subnet A
         - associate it with the custom security group
         - through "remote-exec" provisioner install apache2 service

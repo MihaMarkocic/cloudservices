@@ -25,7 +25,7 @@ In this demo, two (private & public) subnets are created in a custom VPC. An ins
         - Monitoring ACCEPTED traffic for the private subnet
 
 - [EC2 instances deployment](https://github.com/MihaMarkocic/cloudservices/tree/master/AWS/network_security/modules/compute):
-    1. Obtain AWS AMI ID for the desired os *(Ubuntu Server 18.04 LTS from Canonical)*
+    1. Obtain AWS AMI ID for the desired os *(Ubuntu Server 20.04 LTS from Canonical)*
     2. Deploy 1 server instance in a created public subnet, and associate it with public Security Group
     3. Deploy 1 server instance in a created private subnet, and associate it with private Security Group    
 
