@@ -8,7 +8,7 @@ data "aws_ami" "ubuntu" {
 
     filter {
         name = "name"
-        values = ["ubuntu/images/hvm-ssd/ubuntu-bionic*"]
+        values = ["ubuntu/images/hvm-ssd/ubuntu-focal*"]
     }
 
     filter {
@@ -41,7 +41,7 @@ resource "aws_instance" "bastion" {
 
 	provisioner "remote-exec" {
 		inline = [
-			"sudo wget https://raw.githubusercontent.com/MihaMarkocic/cloudservices/master/AWS/bastion_host/init_files/bastion_init.sh",
+			"sudo wget https://raw.githubusercontent.com/MihaMarkocic/cloudservices/master/AWS/web_application_firewall/init_files/bastion_init.sh",
 			"sudo chmod 774 bastion_init.sh",
 			"sudo ./bastion_init.sh"
 		]
@@ -74,7 +74,7 @@ resource "aws_instance" "webserver1" {
 	
 	provisioner "remote-exec" {
 		inline = [
-			"sudo wget https://raw.githubusercontent.com/MihaMarkocic/cloudservices/master/AWS/bastion_host/init_files/webserver_init.sh",
+			"sudo wget https://raw.githubusercontent.com/MihaMarkocic/cloudservices/master/AWS/web_application_firewall/init_files/webserver_init.sh",
 			"sudo chmod 774 webserver_init.sh",
 			"sudo ./webserver_init.sh"
 		]
@@ -107,7 +107,7 @@ resource "aws_instance" "webserver2" {
 	
 	provisioner "remote-exec" {
 		inline = [
-			"sudo wget https://raw.githubusercontent.com/MihaMarkocic/cloudservices/master/AWS/bastion_host/init_files/webserver_init.sh",
+			"sudo wget https://raw.githubusercontent.com/MihaMarkocic/cloudservices/master/AWS/web_application_firewall/init_files/webserver_init.sh",
 			"sudo chmod 774 webserver_init.sh",
 			"sudo ./webserver_init.sh"
 		]
