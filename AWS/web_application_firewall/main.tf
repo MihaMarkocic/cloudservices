@@ -17,12 +17,23 @@ module "network" {
 module "instances" {
 	source = "./modules/compute"
 	
-	pub_sub1_id = module.network.pubSub1ID
-	pub_sub2_id = module.network.pubSub2ID
+	pub_sub1_id = module.network.pub_sub1_ID
+	pub_sub2_id = module.network.pub_sub2_ID
 	prvt_sub1_id = module.network.prvtSub1ID
 	webserver_sg_id = module.network.webserverSGID
 	bastion_sg_id = module.network.bastionSGID
 	database_sg_id = module.network.databaseSGID
+}
+
+module "loadbalancer" {
+	source = "./modules/balancer"
+
+	alb_security_group_ID = module.network.alb_sg_ID
+	pub_sub1_id = module.network.pub_sub1_ID
+	pub_sub2_id = module.network.pub_sub2_ID
+	vpc_id =  module.network.vpc_ID
+	web1_ID = module.compute.web1_ID
+	web2_ID = module.compute.web2_ID
 }
 
 output "webserver1_public_ip" {
