@@ -21,3 +21,11 @@ output "bastionPubIP" {
 output "databasePrvtIP" {
     value = aws_instance.database.private_ip
 }
+
+output "web1_ID" {
+    value = aws_instance.webserver1.id
+}
+
+output "web2_ID" {
+    value = aws_instance.webserver2.id
+}
