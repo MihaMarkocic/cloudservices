@@ -17,45 +17,45 @@ module "network" {
 module "instances" {
 	source = "./modules/compute"
 	
-	pub_sub1_id = module.network.pub_sub1_ID
-	pub_sub2_id = module.network.pub_sub2_ID
-	prvt_sub1_id = module.network.prvtSub1ID
-	webserver_sg_id = module.network.webserverSGID
-	bastion_sg_id = module.network.bastionSGID
-	database_sg_id = module.network.databaseSGID
+	pub_sub1_id = module.network.pub_sub1_id
+	pub_sub2_id = module.network.pub_sub2_id
+	prvt_sub1_id = module.network.prvt_sub1_id
+	webserver_sg_id = module.network.webserver_sg_id
+	bastion_sg_id = module.network.bastion_sg_id
+	database_sg_id = module.network.database_sg_id
 }
 
 module "loadbalancer" {
 	source = "./modules/balancer"
 
-	alb_security_group_ID = module.network.alb_sg_ID
-	pub_sub1_id = module.network.pub_sub1_ID
-	pub_sub2_id = module.network.pub_sub2_ID
-	vpc_id =  module.network.vpc_ID
-	web1_ID = module.compute.web1_ID
-	web2_ID = module.compute.web2_ID
+	alb_security_group_id = module.network.alb_sg_id
+	pub_sub1_id = module.network.pub_sub1_id
+	pub_sub2_id = module.network.pub_sub2_id
+	vpc_id =  module.network.vpc_id
+	web1_id = module.instances.web1_id
+	web2_id = module.instances.web2_id
 }
 
 output "webserver1_public_ip" {
-	value = module.instances.webserver1PubIP
+	value = module.instances.web1_pub_ip
 }
 
 output "webserver1_private_ip" {
-	value = module.instances.webserver1PrvtIP
+	value = module.instances.web1_prvt_ip
 }
 
 output "webserver2_public_ip" {
-	value = module.instances.webserver2PubIP
+	value = module.instances.web2_pub_ip
 }
 
 output "webserver2_private_ip" {
-	value = module.instances.webserver2PrvtIP
+	value = module.instances.web2_prvt_ip
 }
 
 output "jumphost_public_ip" {
-	value = module.instances.bastionPubIP
+	value = module.instances.bastion_pub_ip
 }
 
 output "database_private_ip" {
-	value = module.instances.databasePrvtIP
+	value = module.instances.database_prvt_ip
 }
