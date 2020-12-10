@@ -22,5 +22,8 @@ echo 'XbitHack on' >> /etc/apache2/apache2.conf
 sudo bash -c "sed -i 's/Options Indexes FollowSymLinks/Options Indexes FollowSymLinks Includes/' /etc/apache2/apache2.conf"
 sudo chmod +x /var/www/html/index.html
 
+# install net-tools to do ifconfig SSI on frontpage
+sudo apt install net-tools
+
 #restart apache2 service
 sudo systemctl restart apache2
