@@ -1,36 +1,40 @@
 #outputs of network.tf resources for use in other modules
 
-output "pubSub1ID" {
+output "vpc_ID" {
+	value = aws_vpc.wafVPC.id
+}
+
+output "pub_sub1_ID" {
 	value = aws_subnet.publicSub1.id
 	description = "id of public subnet 1"
 }
 
-output "pubSub2ID" {
+output "pub_sub2_ID" {
 	value = aws_subnet.publicSub2.id
 	description = "id of public subnet 2"
 }
 
-output "prvtSub1ID" {
+output "prvt_sub1_ID" {
 	value = aws_subnet.privateSub1.id
 	description = "id of private subnet 1"
 }
 
-output "webserverSGID" {
+output "webserver_sg_ID" {
 	value = [ "${aws_security_group.webserverSG.id}" ]
 	description = "id of a webserver security group for ec2 instances"
 }
 
-output "bastionSGID" {
+output "bastion_sg_ID" {
 	value = [ "${aws_security_group.bastionSG.id}" ]
 	description = "id of a bastion security group for ec2 instance"
 }
 
-output "databaseSGID" {
+output "database_sg_ID" {
 	value = [ "${aws_security_group.databaseSG.id}" ]
 	description = "id of a database security group"
 }
 
-output "albSGID" {
+output "alb_sg_ID" {
 	value = ["${aws_security_group.albSG.id}"]
 	description = "id of application load balancer security group"
 }
