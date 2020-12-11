@@ -36,6 +36,12 @@ module "loadbalancer" {
 	web2_id = module.instances.web2_id
 }
 
+module "waf" {
+	source = "./modules/waf"
+
+	alb_arn = module.loadbalancer.alb_arn
+}
+
 output "webserver1_public_ip" {
 	value = module.instances.web1_pub_ip
 }
