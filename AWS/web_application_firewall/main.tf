@@ -59,3 +59,7 @@ output "jumphost_public_ip" {
 output "database_private_ip" {
 	value = module.instances.database_prvt_ip
 }
+
+output "alb_dns_name" {
+	value = module.loadbalancer.alb_dns_name
+}

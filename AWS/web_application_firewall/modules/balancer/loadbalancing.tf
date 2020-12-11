@@ -75,3 +75,7 @@ resource "aws_lb_listener" "listenerHttp" {
 #        target_group_arn = aws_lb_target_group.albTgHttps.arn
 #    }
 #}
+
+output "alb_dns_name" {
+    value = aws_lb.webAlb.dns_name
+}
