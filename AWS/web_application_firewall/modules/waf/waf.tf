@@ -12,17 +12,22 @@ resource "aws_wafv2_web_acl" "demoWAF" {
     name = "demo-WAF"
     scope = "REGIONAL"
 
-    default_action = "allow"
+    default_action {
+        allow {}
+    }
 
     rule {
         name = "demo-rule-1"
-        action = "block"
         priority = 1
+
+        action {
+            block{}
+        }
 
         statement {
             # search web request components for matches with regular expressions
             regex_pattern_set_reference_statement { 
-                arn = aws_wafv2_regex_pattern_set. .arn
+                arn = aws_wafv2_regex_pattern_set.blockedURL.arn
                 
                 #The part of a web request that you want AWS WAF to inspect.
                 field_to_match {
@@ -30,7 +35,7 @@ resource "aws_wafv2_web_acl" "demoWAF" {
                     uri_path {} 
                 }
 
-                text_transformtaion {
+                text_transformation {
                     priority = 1
                     type = "NONE"
                 }
@@ -62,6 +67,10 @@ resource "aws_wafv2_regex_pattern_set" "blockedURL"{
 
     regular_expression {
         regex_string = "admin"
+    }
+
+    regular_expression {
+        regex_string = "registration"
     }
 }
 
