@@ -19,13 +19,6 @@ resource "aws_lb_target_group" "albTgHttp" {
     vpc_id = var.vpc_id
 }
 
-#resource "aws_lb_target_group" "albTgHttps" {
-#    name = "HTTPS-tg"
-#    port = 443
-#    protocol = "HTTPS"
-#    vpc_id = var.vpc_id
-#}
-
 resource "aws_lb_target_group_attachment" "httpAttach1" {
     target_group_arn = aws_lb_target_group.albTgHttp.arn
     target_id = var.web1_id
@@ -37,18 +30,6 @@ resource "aws_lb_target_group_attachment" "httpAttach2" {
     target_id = var.web2_id
     port = 80
 }
-
-#resource "aws_lb_target_group_attachment" "httpsAttach1" {
-#    target_group_arn = aws_lb_target_group.albTgHttps.arn
-#    target_id = var.web1_id
-#    port = 443
-#}
-
-#resource "aws_lb_target_group_attachment" "httpsAttach2" {
-#    target_group_arn = aws_lb_target_group.albTgHttps.arn
-#    target_id = var.web2_id
-#    port = 443
-#}
 
 # create listeners
 
@@ -63,22 +44,9 @@ resource "aws_lb_listener" "listenerHttp" {
     }
 }
 
-#resource "aws_lb_listener" "listenerHttps" {
-#    load_balancer_arn = aws_lb.webAlb.arn
-#    port = "443"
-#    protocol = "HTTPS"
-#    ssl_policy = 
-#    certificate_arn = 
-#
-#    default_action {
-#        type = "forward" 
-#        target_group_arn = aws_lb_target_group.albTgHttps.arn
-#    }
-#}
-
 output "alb_dns_name" {
     value = aws_lb.webAlb.dns_name
 }
 output "alb_arn" {
-    value = "aws_lb.webAlb.arn
+    value = aws_lb.webAlb.arn
 }
