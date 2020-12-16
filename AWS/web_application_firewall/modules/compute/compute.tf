@@ -76,7 +76,7 @@ resource "aws_instance" "webserver1" {
 		inline = [
 			"sudo wget https://raw.githubusercontent.com/MihaMarkocic/cloudservices/master/AWS/web_application_firewall/init_files/webserver_init.sh",
 			"sudo chmod 774 webserver_init.sh",
-			"sudo ./webserver_init.sh ${aws_instance.webserver1.tags.Name} ${aws_instance.webserver1.public_ip}"
+			"sudo ./webserver_init.sh ${aws_instance.webserver1.tags.Name}"
 		]
 	}
 }
@@ -109,7 +109,7 @@ resource "aws_instance" "webserver2" {
 		inline = [
 			"sudo wget https://raw.githubusercontent.com/MihaMarkocic/cloudservices/master/AWS/web_application_firewall/init_files/webserver_init.sh",
 			"sudo chmod 774 webserver_init.sh",
-			"sudo ./webserver_init.sh ${aws_instance.webserver2.tags.Name} ${aws_instance.webserver2.public_ip}"
+			"sudo ./webserver_init.sh ${aws_instance.webserver2.tags.Name}"
 		]
 	}
 }
