@@ -19,6 +19,8 @@ sudo a2enmod include cgi
 cd /var/www/html
 sudo rm index.html
 sudo wget -O index.html https://raw.githubusercontent.com/MihaMarkocic/cloudservices/master/AWS/web_application_firewall/init_files/index.html
+sudo bash -c "sed -i 's/SERVER_NAME/$1/' index.html"
+sudo bash -c "sed -i 's/SERVER_IP/$2/' index.html"
 sudo wget https://raw.githubusercontent.com/MihaMarkocic/cloudservices/master/AWS/web_application_firewall/init_files/.htaccess
 echo 'XbitHack on' >> /etc/apache2/apache2.conf
 sudo bash -c "sed -i 's/Options Indexes FollowSymLinks/Options Indexes FollowSymLinks Includes/' /etc/apache2/apache2.conf"
