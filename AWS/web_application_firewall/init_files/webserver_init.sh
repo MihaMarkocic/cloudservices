@@ -1,7 +1,6 @@
 #!/bin/bash
 
 #install apache
-sudo apt-get --assume-yes update
 sudo apt-get -f autoremove
 sudo apt-get --asume-yes update
 sudo apt-get --assume-yes upgrade
